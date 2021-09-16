@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<title>ゲーム募集掲示板</title>
+</head>
+<body>
+    <ul>
+        <% if !current_user.nil? %>
+            <li>おかえりなさい、<%= current_user.name %>さん</li>
+            <li><a href = '/sign_out'>ログアウト</a></li>
+        <% else %>
+            <li><a href = "/sign_in">ログイン</a></li>
+            <li><a href = "/sign_up">新規登録</a></li>
+        <% end %>
+    </ul>
+    <%= yield %>
+</body>
+</html>
