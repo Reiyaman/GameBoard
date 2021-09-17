@@ -6,12 +6,20 @@
 </head>
 <body>
     <ul>
-        <% if !current_user.nil? %>
-            <li>おかえりなさい、<%= current_user.name %>さん</li>
-            <li><a href = '/sign_out'>ログアウト</a></li>
+        <b>ゲーム掲示板にようこそ！！</b><br>
+        <% unless session[:user] %>
+            <b>新規の方ですか？</b>
+            <a href = "/sign_up">新規登録</a></br>
+            <b>それともログインしますか？</b>
+            <a href = "/sign_in">ログイン</a>
         <% else %>
-            <li><a href = "/sign_in">ログイン</a></li>
-            <li><a href = "/sign_up">新規登録</a></li>
+            <b>おかえりなさい、<%= current_user.name %>さん</b>
+            <% if current_user.profile.empty? %>
+                <a href = '/home'><img src = "/assets/img/game_software_cassette.png" alt = "user_image" width = "40" height = "40"></a>
+            <% else %>
+                <a href = '/home'><img src = "<%= current_user.profile %>" alt = "user_image" width = "40" height = "40"></a>
+                <a href = '/sign_out'>ログアウト</a>
+            <% end %>
         <% end %>
     </ul>
     <%= yield %>

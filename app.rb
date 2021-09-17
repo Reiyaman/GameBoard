@@ -72,4 +72,16 @@ get '/sign_out' do #ログアウト
     session[:user] = nil
     redirect '/'
 end
+
+get '/home' do #ホーム画面に飛ぶ
+    erb :home
+end
+
+get '/post/board' do
+    erb :recruit
+end
+
+post '/post/board' do
+    
+end
     
