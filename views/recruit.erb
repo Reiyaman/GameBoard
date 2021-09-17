@@ -1,0 +1,28 @@
+<section>
+    <h1>投稿フォーム</h1>
+    <form action = "/post/board" method = "post">
+        機種選択
+        <select name = "model">
+            <option value = "PC">PC</option>
+            <option value = "Phone">Phone</option>
+            <option value = "Switch">Switch</option>
+            <option value = "PS4">PS4</option>
+            <option value = "PS5">PS5</option>
+            <option value = "Xbox">Xbox One</option>
+        </select><br>
+        ゲームタイトル
+        <input type = "text" name = "title" placeholder = "タイトル名">
+        </input><br>
+        カテゴリー
+        <select name = "category">
+            <option value = "together">協力プレイ</option>
+            <option value = "battle">対戦</option>
+            <option value = "friends">フレンド</option>
+            <option value = "other">その他</option>
+        </select><br>
+        投稿内容<br>
+        <textarea name = "article" rows ="4" col ="35" placeholder = "140文字以内">
+        </textarea><br>
+        <input type = "submit" value = "投稿する！">
+        </input>
+</section>
