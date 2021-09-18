@@ -6,7 +6,7 @@
 </head>
 <body>
     <ul>
-        <b>ゲーム掲示板にようこそ！！</b><br>
+        <b><a href = "/">ゲーム掲示板にようこそ！！</a></b><br>
         <% unless session[:user] %>
             <b>新規の方ですか？</b>
             <a href = "/sign_up">新規登録</a></br>
@@ -18,9 +18,9 @@
                 <a href = '/home'><img src = "/assets/img/game_software_cassette.png" alt = "user_image" width = "40" height = "40"></a>
             <% else %>
                 <a href = '/home'><img src = "<%= current_user.profile %>" alt = "user_image" width = "40" height = "40"></a>
-                <a href = '/sign_out'>ログアウト</a>
             <% end %>
-            <a href = "/post/board">投稿ページ</a>
+                <a href = '/sign_out'>ログアウト</a>
+                <a href = "/post/board">投稿ページ</a>
         <% end %>
     </ul>
     <%= yield %>

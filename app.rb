@@ -22,6 +22,7 @@ before do
 end
 
 get '/' do
+    @recruits = Recruit.all
     erb :index
 end
 
@@ -33,7 +34,7 @@ get '/sign_up' do #新規登録画面に飛ぶ
     erb :sign_up
 end
 
-post '/sign_in' do
+post '/sign_in' do #ログイン
     user = User.find_by(name: params[:name])
     if user && user.authenticate(params[:password])
         session[:user] = user.id
@@ -43,7 +44,7 @@ post '/sign_in' do
     end
 end
 
-post '/sign_up' do
+post '/sign_up' do #新規登録
     
     img_url = '' #ファイルのアップロード
     if params[:profile]
@@ -74,6 +75,7 @@ get '/sign_out' do #ログアウト
 end
 
 get '/home' do #ホーム画面に飛ぶ
+    @posts = Recruit.where(user_id: session[:user]) #ログインしているユーザーの投稿情報だけ取り出す
     erb :home
 end
 
@@ -83,5 +85,30 @@ end
 
 post '/post/board' do
     
+    Model.create(
+        platform: params[:platform]
+        )
+        
+    Category.create(
+        purpose: params[:purpose]
+        )
+    
+    Game.create(
+        gamename: params[:gamename],
+        model_id: Model.find_by(platform: params[:platform]).id, #機種テーブルから今追加したレコードのid取得
+        category_id: Category.find_by(purpose: params[:purpose]).id #カテゴリーテーブルから今追加したレコードのid取得
+        )
+    
+    Recruit.create(
+        model_id: Model.find_by(platform: params[:platform]).id, #機種テーブルから今追加したレコードのid取得
+        game_id: Game.find_by(gamename: params[:gamename]).id, #ゲームタイトルテーブルから今追加したレコードのid取得
+        category_id: Category.find_by(purpose: params[:purpose]).id, #カテゴリーテーブルから今追加したレコードのid取得
+        article: params[:article],
+        user_id: session[:user],
+        articletime: DateTime.now #現在時刻を取得
+        #statusはnil
+        )
+    
+    redirect '/'
 end
     

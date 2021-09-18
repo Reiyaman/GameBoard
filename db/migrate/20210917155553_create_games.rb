@@ -4,6 +4,8 @@ class CreateGames < ActiveRecord::Migration[6.1]
       t.string :gamename
       t.integer :model_id
       t.integer :category_id
+      
+      t.timestamps null: false
     end
   end
 end
