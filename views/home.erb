@@ -7,6 +7,8 @@
                 <%= Category.find_by(id: posting.category_id).purpose %>
                 <%= Game.find_by(id: posting.game_id).gamename %>
                 <%= posting["article"] %>
+                <a href = "/edit/<%= posting.id %>">編集</a>
+                <a href = "/delete/<%= posting.id %>">削除</a>
                 </p>
             <% end %>
         <% else %>

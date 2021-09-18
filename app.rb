@@ -113,4 +113,14 @@ post '/post/board' do
     
     redirect '/'
 end
+
+get '/edit/:id' do
+    erb :edit
+end
+
+get '/delete/:id' do
+    recruit = Recruit.find(params[:id])
+    recruit.destroy
+    redirect '/home'
+end
     
