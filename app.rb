@@ -107,7 +107,7 @@ post '/post/board' do
         category_id: Category.find_by(purpose: params[:purpose]).id, #カテゴリーテーブルから今追加したレコードのid取得
         article: params[:article],
         user_id: session[:user],
-        articletime: DateTime.now #現在時刻を取得
+        articletime: Time.at(Time.now, in: "+09:00")#現在時刻を取得
         #statusはnil
         )
     
@@ -139,4 +139,7 @@ get '/delete/:id' do
     recruit.destroy
     redirect '/home'
 end
+
+get '/talkroom' do
     
+end
