@@ -3,6 +3,7 @@ Bundler.require
 require 'sinatra/reloader' if development?
 require './models.rb'
 require 'dotenv/load'
+require 'date' #DateTimeを使うために必要なライブラリ
 
 enable :sessions
 
@@ -107,7 +108,7 @@ post '/post/board' do
         category_id: Category.find_by(purpose: params[:purpose]).id, #カテゴリーテーブルから今追加したレコードのid取得
         article: params[:article],
         user_id: session[:user],
-        articletime: Time.at(Time.now, in: "+09:00")#現在時刻を取得
+        articletime: DateTime.now + Rational("9/24")#現在時刻を取得
         #statusはnil
         )
     

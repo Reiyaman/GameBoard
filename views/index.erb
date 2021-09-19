@@ -3,7 +3,7 @@
 	<% if !@recruits.empty? %>
 		<% @recruits.reverse_each do |recruit| %>
 			<p><%= User.find_by(id: recruit.user_id).name %>
-			   <%= recruit["articletime"] %></p>
+			   <%= recruit["articletime"].strftime("%Y-%m-%d %H:%M:%S") %></p>
 			<p><form action = "/talkroom" method = "get">
 				<% if User.find_by(id: recruit.user_id).profile.empty? %>
 			   		<img src = "/assets/img/game_software_cassette.png" alt = "user_image" width = "40" height = "40">
