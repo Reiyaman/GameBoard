@@ -115,9 +115,25 @@ post '/post/board' do
 end
 
 get '/edit/:id' do
+    @edit = Recruit.find(params[:id])
     erb :edit
 end
 
+post '/edit/:id' do
+    editpost = Recruit.find(params[:id])
+    Model.find_by(id: editpost.model_id).platform = params[:platform]
+    Game.find_by(id: editpost.game_id).gamename = params[:gamename]
+    Category.find_by(id: editpost.category_id).purpose = params[:purpose]
+    editpost.article = params[:article]
+    Model.find_by(id: editpost.model_id).save
+    p params[:platform]
+    p Model.find_by(id: editpost.model_id).platform
+    Game.find_by(id: editpost.game_id).save
+    Category.find_by(id: editpost.category_id).save
+    editpost.save
+    
+    redirect '/home'
+end
 get '/delete/:id' do
     recruit = Recruit.find(params[:id])
     recruit.destroy
