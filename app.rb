@@ -141,5 +141,5 @@ get '/delete/:id' do
 end
 
 get '/talkroom' do
-    
+    erb :talkroom
 end

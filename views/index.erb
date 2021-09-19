@@ -9,12 +9,14 @@
 			   		<img src = "/assets/img/game_software_cassette.png" alt = "user_image" width = "40" height = "40">
                <% else %>
                 	<img src = "<%= User.find_by(id: recruit.user_id).profile %>" alt = "user_image" width = "40" height = "40">
-               <% end %>
-			   <%= Model.find_by(id: recruit.model_id).platform %>
-			   <%= Category.find_by(id: recruit.category_id).purpose %>
-			   <%= Game.find_by(id: recruit.game_id).gamename %>
+               <% end %> | 
+			   <%= Model.find_by(id: recruit.model_id).platform %> | 
+			   <%= Category.find_by(id: recruit.category_id).purpose %> |
+			   <%= Game.find_by(id: recruit.game_id).gamename %> |
 			   <%= recruit["article"] %>
-			   	<input type = "submit" value = "Join!!">
+			   <% if session[:user] != nil && session[:user] != User.find_by(id: recruit.user_id).id %>
+			   		<input type = "submit" value = "Join!">
+			   <% end %>
 			   </form>
 			</p>
         <% end %>

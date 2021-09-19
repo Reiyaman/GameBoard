@@ -3,11 +3,11 @@
         <% if !@posts.empty? %>
             <% @posts.reverse_each do |posting| %>
                 <p><%= posting["articletime"] %></p>
-                <p><%= Model.find_by(id: posting.model_id).platform %>
-                <%= Game.find_by(id: posting.game_id).gamename %>
-                <%= Category.find_by(id: posting.category_id).purpose %>
-                <%= posting["article"] %>
-                <a href = "/edit/<%= posting.id %>">編集</a>
+                <p><%= Model.find_by(id: posting.model_id).platform %> | 
+                <%= Game.find_by(id: posting.game_id).gamename %> | 
+                <%= Category.find_by(id: posting.category_id).purpose %> | 
+                <%= posting["article"] %> | 
+                <a href = "/edit/<%= posting.id %>">編集</a> 
                 <a href = "/delete/<%= posting.id %>">削除</a>
                 </p>
             <% end %>
