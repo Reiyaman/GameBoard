@@ -144,3 +144,9 @@ end
 get '/talkroom' do
     erb :talkroom
 end
+
+post '/search' do #ゲームタイトルで絞り検索
+    game = Game.find_by(gamename: params[:gamename]).id
+    @recruits = Recruit.where(game_id: game)
+    erb :index
+end
