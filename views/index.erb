@@ -1,10 +1,18 @@
 <section>
+	<h1>最近の募集</h1>
+	<b>カテゴリーで絞る</b><br>
 	<form action = "/search" method = "post">
-		<h1>最近の募集  | 
-		<a href = ></a>
+		機種
+		<%= @modellists.each do |modellist| %>
+			<li><a href = "/?modellist=<%= modellist.id %>"><%= modellist.platform %></a></li>
+		<% end %><br>
+		目的
+		<%= @categorylists.each do |categorylist| %>
+			<li><a href = "/?categorylist=<%= categorylist.id %>"><%= categorylist.purpose %></a></li>
+		<% end %>
+		ゲームタイトル
 		<input type = "text" name = "gamename" placeholder = "ゲームタイトル">
 		<input type = "submit" value = "検索">
-		</h1>
 	</form>	
 	<% if !@recruits.empty? %>
 		<% @recruits.reverse_each do |recruit| %>
