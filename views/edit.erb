@@ -3,12 +3,12 @@
     <form action = "/edit/<%= @edit.id %>" method = "post">
         機種選択
         <select name = "platform">
-            <% Model.all.each do |modellist| %>
-                <option value = "<%= modellist.id %>"
-                <% if modellist.id == @edit.modellist.id %>
+            <% Model.all.each do |model| %>
+                <option value = "<%= model.id %>"
+                <% if model.id == @edit.model.id %>
                     selected
                 <% end %>>
-                <%= modellist.platform %>
+                <%= model.platform %>
                 </option>
             <% end %>
         </select><br>
@@ -17,18 +17,17 @@
         </input><br>
         カテゴリー
         <select name = "purpose" >
-            <% Category.all.each do |categorylist| %>
-                <option value = "<%= categorylist.id %>"
-                <% if categorylist.id == @edit.categorylist.id %>
+            <% Category.all.each do |category| %>
+                <option value = "<%= category.id %>"
+                <% if category.id == @edit.category.id %>
                     selected
                 <% end %>>
-                <%= categorylist.purpose %>
+                <%= category.purpose %>
                 </option>
             <% end %>
         </select><br>
         投稿内容<br>
-        <textarea name = "article" rows ="4" col ="50" value = <%= @edit.article %>>
-        </textarea><br>
+        <textarea name = "article" rows = "5" cols = "40" value = <%= @edit.article %>></textarea>
         <input type = "submit" value = "修正">
         </input>
 </section>
