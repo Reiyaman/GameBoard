@@ -1,26 +1,31 @@
 <section>
     <h1>投稿の編集</h1>
     <form action = "/edit/<%= @edit.id %>" method = "post">
-        <!--機種選択
+        機種選択
         <select name = "platform">
-            <option value = "PC">PC</option>
-            <option value = "Phone">Phone</option>
-            <option value = "Switch">Switch</option>
-            <option value = "PS4">PS4</option>
-            <option value = "PS5">PS5</option>
-            <option value = "Xbox One">Xbox One</option>
+            <% Model.all.each do |modellist| %>
+                <option value = "<%= modellist.id %>"
+                <% if modellist.id == @edit.modellist.id %>
+                    selected
+                <% end %>>
+                <%= modellist.platform %>
+                </option>
+            <% end %>
         </select><br>
         ゲームタイトル
-        <input type = "text" name = "gamename" value = <%#= Game.find_by(id: @edit.game_id).gamename %>>
+        <input type = "text" name = "gamename" value = <%= Game.find_by(id: @edit.game_id).gamename %>>
         </input><br>
         カテゴリー
         <select name = "purpose" >
-            <option value = "協力プレイ">協力プレイ</option>
-            <option value = "対戦">対戦</option>
-            <option value = "フレンド">フレンド</option>
-            <option value = "その他">その他</option>
+            <% Category.all.each do |categorylist| %>
+                <option value = "<%= categorylist.id %>"
+                <% if categorylist.id == @edit.categorylist.id %>
+                    selected
+                <% end %>>
+                <%= categorylist.purpose %>
+                </option>
+            <% end %>
         </select><br>
-        -->
         投稿内容<br>
         <textarea name = "article" rows ="4" col ="50" value = <%= @edit.article %>>
         </textarea><br>

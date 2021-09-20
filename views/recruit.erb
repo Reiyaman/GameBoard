@@ -3,22 +3,18 @@
     <form action = "/post/board" method = "post">
         機種選択
         <select name = "platform">
-            <option value = "PC">PC</option>
-            <option value = "Phone">Phone</option>
-            <option value = "Switch">Switch</option>
-            <option value = "PS4">PS4</option>
-            <option value = "PS5">PS5</option>
-            <option value = "Xbox">Xbox One</option>
+            <% Model.all.each do |modellist| %>
+                <option value = "<%= modellist.id %>"><%= modellist.platform %></option>
+            <% end %>
         </select><br>
         ゲームタイトル
         <input type = "text" name = "gamename" placeholder = "タイトル名">
         </input><br>
         カテゴリー
         <select name = "purpose">
-            <option value = "協力プレイ">協力プレイ</option>
-            <option value = "対戦">対戦</option>
-            <option value = "フレンド">フレンド</option>
-            <option value = "その他">その他</option>
+            <% Category.all.each do |categorylist| %>
+                <option value = "<%= categorylist.id %>"><%= categorylist.purpose %></option>
+            <% end %>
         </select><br>
         投稿内容<br>
         <textarea name = "article" rows ="4" col ="50" placeholder = "200文字以内">

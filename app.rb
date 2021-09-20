@@ -23,7 +23,17 @@ before do
 end
 
 get '/' do
-    @recruits = Recruit.all
+    @models = Model.all
+    @categories = Category.all
+    
+    if params[:model].nil? && params[:category].nil? #条件検索なし
+        @recruits = Recruit.all
+    elsif !params[:category].nil? #目的で条件検索
+        @recruits = Category.find(params[:category]).recruits
+    else                                                       #機種で条件検索
+        @recruits = Model.find(params[:model]).recruits
+    end
+    
     erb :index
 end
 
@@ -88,24 +98,19 @@ end
 
 post '/post/board' do
     
-    Model.create(
-        platform: params[:platform]
-        )
-        
-    Category.create(
-        purpose: params[:purpose]
-        )
+    model = Model.find(params[:platform])
+    category = Category.find(params[:purpose])
     
     Game.create(
         gamename: params[:gamename],
-        model_id: Model.find_by(platform: params[:platform]).id, #機種テーブルから今追加したレコードのid取得
-        category_id: Category.find_by(purpose: params[:purpose]).id #カテゴリーテーブルから今追加したレコードのid取得
+        model_id: model.id, #機種テーブルから今追加したレコードのid取得
+        category_id: category.id #カテゴリーテーブルから今追加したレコードのid取得
         )
     
     Recruit.create(
-        model_id: Model.find_by(platform: params[:platform]).id, #機種テーブルから今追加したレコードのid取得
+        model_id: model.id, #機種テーブルから今追加したレコードのid取得
         game_id: Game.find_by(gamename: params[:gamename]).id, #ゲームタイトルテーブルから今追加したレコードのid取得
-        category_id: Category.find_by(purpose: params[:purpose]).id, #カテゴリーテーブルから今追加したレコードのid取得
+        category_id: category.id, #カテゴリーテーブルから今追加したレコードのid取得
         article: params[:article],
         user_id: session[:user],
         articletime: DateTime.now + Rational("9/24")#現在時刻を取得
@@ -122,15 +127,15 @@ end
 
 post '/edit/:id' do
     editpost = Recruit.find(params[:id])
-    Model.find_by(id: editpost.model_id).platform = params[:platform]
+    model = Model.find(params[:platform])
+    category = Category.find(params[:purpose])
+    
     Game.find_by(id: editpost.game_id).gamename = params[:gamename]
-    Category.find_by(id: editpost.category_id).purpose = params[:purpose]
     editpost.article = params[:article]
-    Model.find_by(id: editpost.model_id).save
-    p params[:platform]
-    p Model.find_by(id: editpost.model_id).platform
+    editpost.model_id = model.id
+    editpost.category_id = category.id
+    
     Game.find_by(id: editpost.game_id).save
-    Category.find_by(id: editpost.category_id).save
     editpost.save
     
     redirect '/home'
@@ -148,5 +153,7 @@ end
 post '/search' do #ゲームタイトルで絞り検索
     game = Game.find_by(gamename: params[:gamename]).id
     @recruits = Recruit.where(game_id: game)
+    @models = Model.all
+    @categories = Category.all
     erb :index
 end

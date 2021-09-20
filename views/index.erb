@@ -3,13 +3,13 @@
 	<b>カテゴリーで絞る</b><br>
 	<form action = "/search" method = "post">
 		機種
-		<%= @modellists.each do |modellist| %>
-			<li><a href = "/?modellist=<%= modellist.id %>"><%= modellist.platform %></a></li>
+		<% @models.each do |model| %>
+			<a href = "/?model=<%= model.id %>"><%= model.platform %></a>
 		<% end %><br>
 		目的
-		<%= @categorylists.each do |categorylist| %>
-			<li><a href = "/?categorylist=<%= categorylist.id %>"><%= categorylist.purpose %></a></li>
-		<% end %>
+		<% @categories.each do |category| %>
+			<a href = "/?category=<%= category.id %>"><%= category.purpose %></a>
+		<% end %><br>
 		ゲームタイトル
 		<input type = "text" name = "gamename" placeholder = "ゲームタイトル">
 		<input type = "submit" value = "検索">
