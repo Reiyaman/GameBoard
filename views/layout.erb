@@ -13,7 +13,12 @@
             <b>それともログインしますか？</b>
             <a href = "/sign_in">ログイン</a>
         <% else %>
-            <b><%= @agree %>、<%= current_user.name %>さん</b>
+            <% if current_user.login == false %>
+                <b>ようこそ、<%= current_user.name %>さん</b>
+            <% else %>
+                <b>おかえりなさい、<%= current_user.name %>さん</b>
+            <% end %>
+            
             <% if current_user.profile.empty? %>
                 <a href = '/home'><img src = "/assets/img/game_software_cassette.png" alt = "user_image" width = "40" height = "40"></a>
             <% else %>

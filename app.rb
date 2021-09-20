@@ -39,7 +39,7 @@ post '/sign_in' do #ログイン
     user = User.find_by(name: params[:name])
     if user && user.authenticate(params[:password])
         session[:user] = user.id
-        @agree = "おかえりなさい"
+        user.login = true
         redirect '/'
     else
         redirect '/'
@@ -65,7 +65,7 @@ post '/sign_up' do #新規登録
         
     if user.persisted?
         session[:user] = user.id
-        @agree = "ようこそ"
+        user.login = false
         redirect '/'
     else
         redirect '/'

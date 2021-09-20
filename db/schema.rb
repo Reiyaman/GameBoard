@@ -72,6 +72,7 @@ ActiveRecord::Schema.define(version: 2021_09_19_142805) do
     t.string "name"
     t.string "password_digest"
     t.text "profile"
+    t.boolean "login"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
