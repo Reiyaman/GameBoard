@@ -90,6 +90,8 @@ end
 
 get '/home' do #ホーム画面に飛ぶ
     @posts = Recruit.where(user_id: session[:user]) #ログインしているユーザーの投稿情報だけ取り出す
+    @userjoins = Join.where(user_id: session[:user]) #ログインしているユーザーのJoin情報だけを取り出
+    @talkrooms = Talkroom.all
     erb :home
 end
 
