@@ -1,4 +1,6 @@
 <section>
+    <h1><%= current_user.name %>さんが今Joinしているトークルーム</h1>
+    ありません。誰かの投稿を見てJoinしてみよう！
     <h1><%= current_user.name %>さんの投稿</h1>
         <% if !@posts.empty? %>
             <% @posts.reverse_each do |posting| %>

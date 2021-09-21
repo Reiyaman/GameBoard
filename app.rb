@@ -50,6 +50,7 @@ post '/sign_in' do #ログイン
     if user && user.authenticate(params[:password])
         session[:user] = user.id
         user.login = true
+        user.save
         redirect '/'
     else
         redirect '/'
@@ -70,12 +71,12 @@ post '/sign_up' do #新規登録
         name: params[:name],
         password: params[:password],
         password_confirmation: params[:password_confirmation],
-        profile: img_url
+        profile: img_url,
+        login: false
         )
         
     if user.persisted?
         session[:user] = user.id
-        user.login = false
         redirect '/'
     else
         redirect '/'
@@ -146,7 +147,21 @@ get '/delete/:id' do
     redirect '/home'
 end
 
-get '/talkroom' do
+get '/talkroom/:id' do
+    @joinrecruit = Recruit.find(params[:id])
+    #Joinボタンを押したら
+    if Join.find_by(user_id: session[:user], talkroom_id: params[:id]) == nil
+        Talkroom.create( #トークルームの作成
+            recruit_id: params[:id]
+            )
+        Join.create(
+            user_id: session[:user],
+            talkroom_id: Talkroom.find_by(recruit_id: params[:id]).id
+            )
+    end
+   
+    @joiner = Join.all
+    @talkrooms = Talkroom.all
     erb :talkroom
 end
 

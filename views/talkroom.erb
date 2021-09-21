@@ -1,4 +1,4 @@
 <section>
-    ここから先は有料会員となります。<br>
-    サイト作成者にお金を振り込んでいただけるとご利用になれます。
+    <h1><%= User.find_by(id: @joinrecruit.user_id).name %>さんと
+    <%= Game.find_by(id: @joinrecruit.game_id).gamename%>で遊ぶためのトークルーム</h1>
 </section>
