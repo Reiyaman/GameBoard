@@ -163,7 +163,7 @@ get '/talkroom/:id' do
     end
    
     @joiner = Join.all
-    @talkrooms = Talkroom.all
+    @talkrooms = Talkroom.find(params[:id])
     erb :talkroom
 end
 

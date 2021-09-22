@@ -1,5 +1,5 @@
 <section>
-    <h1><%= current_user.name %>さんが今Joinトークルーム</h1>
+    <h1><%= current_user.name %>さんが今Join中のトークルーム</h1>
     <%# すでにJoinしている時マイページからも飛べるようにする%>
     <% if !@userjoins.empty? %>
         <% @userjoins.each do |userjoin| %>
