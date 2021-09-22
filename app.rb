@@ -143,13 +143,14 @@ post '/edit/:id' do
     
     redirect '/home'
 end
+
 get '/delete/:id' do
     recruit = Recruit.find(params[:id])
     recruit.destroy
     redirect '/home'
 end
 
-get '/talkroom/:id' do
+post '/talkroom/:id' do #トークルームに飛ぶ
     @joinrecruit = Recruit.find(params[:id])
     #Joinボタンを押したら
     if Join.find_by(user_id: session[:user], talkroom_id: params[:id]) == nil
@@ -173,4 +174,10 @@ post '/search' do #ゲームタイトルで絞り検索
     @models = Model.all
     @categories = Category.all
     erb :index
+end
+
+post '/exit/:id' do #トークルーム退出
+    exitroom = Join.find_by(talkroom_id: params[:id], user_id: session[:user])
+    exitroom.destroy
+    redirect '/'
 end
