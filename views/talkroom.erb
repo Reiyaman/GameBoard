@@ -7,7 +7,9 @@
     今Joinしているユーザー：
     <% @joiner.each do |joiner| %>
         <% if @talkrooms.id == joiner.talkroom_id %>
-            <%= User.find_by(id: joiner.user_id).name %>,
+            <% if joiner.user_id != @joinrecruit.user_id %><%# 投稿者の名前はいらない%>
+                <%= User.find_by(id: joiner.user_id).name %>,
+            <% end %>
         <% end %>
     <% end %><br>
 </section>

@@ -92,14 +92,15 @@ get '/home' do #ホーム画面に飛ぶ
     @posts = Recruit.where(user_id: session[:user]) #ログインしているユーザーの投稿情報だけ取り出す
     @userjoins = Join.where(user_id: session[:user]) #ログインしているユーザーのJoin情報だけを取り出
     @talkrooms = Talkroom.all
+    @joiner = Join.all
     erb :home
 end
 
-get '/post/board' do
+get '/post/board' do #投稿ページに飛ぶ
     erb :recruit
 end
 
-post '/post/board' do
+post '/post/board' do #投稿する
     
     model = Model.find(params[:platform])
     category = Category.find(params[:purpose])
@@ -123,12 +124,12 @@ post '/post/board' do
     redirect '/'
 end
 
-get '/edit/:id' do
+get '/edit/:id' do #編集ページ
     @edit = Recruit.find(params[:id])
     erb :edit
 end
 
-post '/edit/:id' do
+post '/edit/:id' do #編集する
     editpost = Recruit.find(params[:id])
     model = Model.find(params[:platform])
     category = Category.find(params[:purpose])
@@ -150,23 +151,47 @@ get '/delete/:id' do
     redirect '/home'
 end
 
-post '/talkroom/:id' do #トークルームに飛ぶ
+get '/talkroom/:id' do #トークルームに飛ぶ
     @joinrecruit = Recruit.find(params[:id])
-    #Joinボタンを押したら
-    if Join.find_by(user_id: session[:user], talkroom_id: params[:id]) == nil
-        Talkroom.create( #トークルームの作成
-            recruit_id: params[:id]
-            )
-        Join.create(
+    @joiner = Join.all
+    @talkrooms = Talkroom.find_by(recruit_id: params[:id])
+    erb :talkroom
+end
+    
+post '/talkroom/:id' do #トークルーム作成
+    @joinrecruit = Recruit.find(params[:id])
+    #Joinボタンを押したら(初回だけ)
+    if Join.find_by(user_id: session[:user], talkroom_id: Talkroom.find_by(recruit_id: params[:id])) == nil
+        #トークルームのレコードは重複なし
+        if Talkroom.find_by(recruit_id: params[:id]) == nil
+            Talkroom.create( #トークルームの作成
+                recruit_id: params[:id]
+                )
+            p "a"
+        end
+        
+        if Join.find_by(user_id: session[:user], talkroom_id: Talkroom.find_by(recruit_id: params[:id]).id) == nil
+            Join.create( #参加者
             user_id: session[:user],
             talkroom_id: Talkroom.find_by(recruit_id: params[:id]).id
             )
+        p "b"
+        end
+        
+        if Join.find_by(user_id: User.find_by(id: @joinrecruit.user_id), talkroom_id: Talkroom.find_by(recruit_id: params[:id])) == nil 
+            Join.create( #投稿者
+                user_id: User.find_by(id: @joinrecruit.user_id).id,
+                talkroom_id: Talkroom.find_by(recruit_id: params[:id]).id
+                )
+        p "c"
+        end
     end
    
     @joiner = Join.all
-    @talkrooms = Talkroom.find(params[:id])
+    @talkrooms = Talkroom.find_by(recruit_id: params[:id])
     erb :talkroom
 end
+
 
 post '/search' do #ゲームタイトルで絞り検索
     game = Game.find_by(gamename: params[:gamename]).id
@@ -177,7 +202,18 @@ post '/search' do #ゲームタイトルで絞り検索
 end
 
 post '/exit/:id' do #トークルーム退出
-    exitroom = Join.find_by(talkroom_id: params[:id], user_id: session[:user])
+    @joinrecruit = Recruit.find(params[:id])
+    exitroom = Join.find_by(talkroom_id: Talkroom.find_by(recruit_id: params[:id]), user_id: session[:user])
     exitroom.destroy
+    p "d"
+    
+    #誰も参加者いなくなったら自動的にトークルーム削除
+    countjoiner = Join.where(talkroom_id: Talkroom.find_by(recruit_id: params[:id])).count
+    if countjoiner == 1
+        destroyroom = Talkroom.find_by(recruit_id: params[:id])
+        destroyroom.destroy
+        p "f"
+    end
+    
     redirect '/'
 end
