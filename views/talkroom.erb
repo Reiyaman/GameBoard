@@ -19,6 +19,7 @@
     <h1>チャット</h1>
     <% if !@chats.empty? %>
         <% @chats.each do |chat| %>
+            <%= User.find_by(id: chat.user_id).name %>：
             <%= chat["comment"] %><br>
         <% end %>
     <% end %>
