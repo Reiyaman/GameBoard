@@ -155,6 +155,7 @@ get '/talkroom/:id' do #トークルームに飛ぶ
     @joinrecruit = Recruit.find(params[:id])
     @joiner = Join.all
     @talkrooms = Talkroom.find_by(recruit_id: params[:id])
+    @chats = Chat.where(talkroom_id: Talkroom.find_by(recruit_id: params[:id]).id) #そのトークルームのチャットレコードを取り出す
     erb :talkroom
 end
     
@@ -189,6 +190,8 @@ post '/talkroom/:id' do #トークルーム作成
    
     @joiner = Join.all
     @talkrooms = Talkroom.find_by(recruit_id: params[:id])
+    @chats = Chat.where(talkroom_id: Talkroom.find_by(recruit_id: params[:id])) #そのトークルームのチャットレコードを取り出す
+   
     erb :talkroom
 end
 
@@ -227,4 +230,19 @@ post '/exit/:id' do #トークルーム退出
     end
     
     redirect '/'
+end
+
+post '/chat/:id' do #チャット
+    Chat.create(
+        comment: params[:comment],
+        talkroom_id: params[:id],
+        user_id: session[:user]
+        )
+    
+    @chats = Chat.where(talkroom_id: params[:id]) #このトークルームだけのチャットレコードを取り出す
+    @joiner = Join.all
+    @joinrecruit = Recruit.find(Talkroom.find(params[:id]).recruit_id)
+    @talkrooms = Talkroom.find(params[:id])
+    
+    erb :talkroom
 end

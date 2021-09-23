@@ -8,12 +8,22 @@
             <input type = "submit" value = "退出する"></h1>
         <% end %>
     </form>
-    今Joinしているユーザー：
+    <b>今Joinしているユーザー：
     <% @joiner.each do |joiner| %>
         <% if @talkrooms.id == joiner.talkroom_id %>
             <% if joiner.user_id != @joinrecruit.user_id %><%# 投稿者の名前はいらない%>
                 <%= User.find_by(id: joiner.user_id).name %>,
             <% end %>
         <% end %>
-    <% end %><br>
+    <% end %></b><br>
+    <h1>チャット</h1>
+    <% if !@chats.empty? %>
+        <% @chats.each do |chat| %>
+            <%= chat["comment"] %><br>
+        <% end %>
+    <% end %>
+    <form action = "/chat/<%= @talkrooms.id %>" method = "post">
+        <input type = "text" name = "comment" placeholder = "メッセージを入力">
+        <input type = "submit" value = "送信">
+    </form>
 </section>
