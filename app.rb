@@ -203,16 +203,27 @@ end
 
 post '/exit/:id' do #トークルーム退出
     @joinrecruit = Recruit.find(params[:id])
-    exitroom = Join.find_by(talkroom_id: Talkroom.find_by(recruit_id: params[:id]), user_id: session[:user])
-    exitroom.destroy
-    p "d"
-    
-    #誰も参加者いなくなったら自動的にトークルーム削除
-    countjoiner = Join.where(talkroom_id: Talkroom.find_by(recruit_id: params[:id])).count
-    if countjoiner == 1
+    #閉じるボタン押したら
+    if session[:user] == User.find(@joinrecruit.user_id).id
+        destroyjoin = Join.find_by(talkroom_id: Talkroom.find_by(recruit_id: params[:id]))
+        destroyjoin.destroy #joinレコード消す
         destroyroom = Talkroom.find_by(recruit_id: params[:id])
-        destroyroom.destroy
-        p "f"
+        destroyroom.destroy #talkroomレコード消す
+        @joinrecruit.destroy #投稿消す
+    #退出するボタン押したら
+    else
+        exitroom = Join.find_by(talkroom_id: Talkroom.find_by(recruit_id: params[:id]), user_id: session[:user])
+        exitroom.destroy
+        p "d"
+    
+        #誰も参加者いなくなったら自動的にトークルーム削除
+        countjoiner = Join.where(talkroom_id: Talkroom.find_by(recruit_id: params[:id])).count
+        if countjoiner == 1
+            destroyroom = Talkroom.find_by(recruit_id: params[:id])
+            destroyroom.destroy
+            p "f"
+        end
+    
     end
     
     redirect '/'
