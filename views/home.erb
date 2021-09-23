@@ -40,12 +40,17 @@
                 <%= posting["article"] %> | 
                 <a href = "/edit/<%= posting.id %>">編集</a>
                 <a href = "/delete/<%= posting.id %>">削除</a>
-                <% if !@talkrooms.empty? %>
-                    <% @talkrooms.reverse_each do |talkroom| %><%# 他のユーザーがトークルームに入ると表示かつ、誰もいない時は非表示%>
-                        <% if posting == Recruit.find_by(id: talkroom.recruit_id) %>
-                            <input type = "submit" value = "誰か遊びにきたよ!">
+                <% if posting.status == false %>
+                    募集中！
+                    <% if !@talkrooms.empty? %>
+                        <% @talkrooms.reverse_each do |talkroom| %><%# 他のユーザーがトークルームに入ると表示かつ、誰もいない時は非表示%>
+                            <% if posting == Recruit.find_by(id: talkroom.recruit_id) %>
+                                <input type = "submit" value = "誰か遊びにきたよ!">
+                            <% end %>
                         <% end %>
                     <% end %>
+                <% elsif posting.status == true %>
+                    募集終了
                 <% end %>
             </form></p>
         <% end %>

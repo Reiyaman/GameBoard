@@ -117,8 +117,8 @@ post '/post/board' do #投稿する
         category_id: category.id, #カテゴリーテーブルから今追加したレコードのid取得
         article: params[:article],
         user_id: session[:user],
-        articletime: DateTime.now + Rational("9/24")#現在時刻を取得
-        #statusはnil
+        articletime: DateTime.now + Rational("9/24"),#現在時刻を取得
+        status: false
         )
     
     redirect '/'
@@ -206,13 +206,16 @@ end
 
 post '/exit/:id' do #トークルーム退出
     @joinrecruit = Recruit.find(params[:id])
-    #閉じるボタン押したら
+    #終了ボタン押したら
     if session[:user] == User.find(@joinrecruit.user_id).id
         destroyjoin = Join.find_by(talkroom_id: Talkroom.find_by(recruit_id: params[:id]))
         destroyjoin.destroy #joinレコード消す
         destroyroom = Talkroom.find_by(recruit_id: params[:id])
         destroyroom.destroy #talkroomレコード消す
-        @joinrecruit.destroy #投稿消す
+        #@joinrecruit.destroy #投稿消す
+        @joinrecruit.status = true
+        @joinrecruit.save
+        p "o"
     #退出するボタン押したら
     else
         exitroom = Join.find_by(talkroom_id: Talkroom.find_by(recruit_id: params[:id]), user_id: session[:user])
