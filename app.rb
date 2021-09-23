@@ -26,6 +26,7 @@ get '/' do
     @models = Model.all
     @categories = Category.all
     
+    
     if params[:model].nil? && params[:category].nil? #条件検索なし
         @recruits = Recruit.all
     elsif !params[:category].nil? #目的で条件検索

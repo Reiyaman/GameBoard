@@ -27,14 +27,17 @@
 			   <%= Model.find_by(id: recruit.model_id).platform %> | 
 			   <%= Category.find_by(id: recruit.category_id).purpose %> |
 			   <%= Game.find_by(id: recruit.game_id).gamename %> |
-			   定員 /<%= recruit["applicant"] %> | 
+			   <% joinpeople = Join.where(talkroom_id: Talkroom.find_by(recruit_id: recruit.id)).where.not(user_id: recruit.user_id).count %>
+			   定員 <%= joinpeople %>/<%= recruit["applicant"] %> | 
 			   <%= recruit["article"] %> | 
 			   <%# まだ、そのユーザーがJoinボタンを押していな時、かつログインしている時、かつ他のユーザー投稿であるとき、かつ募集中の時表示%>
-			   <% if session[:user] != nil && session[:user] != User.find_by(id: recruit.user_id).id && Join.find_by(user_id: session[:user], talkroom_id: Talkroom.find_by(recruit_id: recruit.id)) == nil && recruit.status == false %>
+			   <% if session[:user] != nil && session[:user] != User.find_by(id: recruit.user_id).id && Join.find_by(user_id: session[:user], talkroom_id: Talkroom.find_by(recruit_id: recruit.id)) == nil && recruit.status == false && joinpeople != recruit["applicant"]%>
 			   		<input type = "submit" value = "募集中！">
 			   <%# すでにJoinしている時 %>
 			   <% elsif Join.find_by(user_id: session[:user], talkroom_id: Talkroom.find_by(recruit_id: recruit.id)) != nil && session[:user] != User.find_by(id: recruit.user_id).id%>
 			   		<input type = "submit" value = "トークに戻る">
+			   <% elsif joinpeople == recruit["applicant"] %>
+			   		満員
 			   <%# 募集終了すると募集終了と出る%>
 			   <% elsif recruit.status == true %>
 			   		募集終了
