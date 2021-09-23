@@ -115,6 +115,7 @@ post '/post/board' do #投稿する
         model_id: model.id, #機種テーブルから今追加したレコードのid取得
         game_id: Game.find_by(gamename: params[:gamename]).id, #ゲームタイトルテーブルから今追加したレコードのid取得
         category_id: category.id, #カテゴリーテーブルから今追加したレコードのid取得
+        applicant: params[:applicant],
         article: params[:article],
         user_id: session[:user],
         articletime: DateTime.now + Rational("9/24"),#現在時刻を取得
@@ -235,7 +236,7 @@ post '/exit/:id' do #トークルーム退出
     redirect '/'
 end
 
-post '/chat/:id' do #チャット
+post '/chat/:id' do #メッセージ送信
     Chat.create(
         comment: params[:comment],
         talkroom_id: params[:id],
