@@ -260,6 +260,12 @@ get '/otherpage/:id' do
 end
 
 get '/review/:id' do
-    
+    @reviewed = User.find(params[:id])
+    @review = 
     erb :reviewlist
+end
+
+get '/write/review' do
+    
+    erb :writereview
 end
