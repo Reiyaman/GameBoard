@@ -258,3 +258,8 @@ get '/otherpage/:id' do
     
     erb :home_other
 end
+
+get '/review/:id' do
+    
+    erb :reviewlist
+end
