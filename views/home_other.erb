@@ -1,3 +1,33 @@
 <section>
-    <h1><%= %>さんのページ</h1>
+    <h1><% if @otheruser.profile.empty? %>
+            <img src = "/assets/img/game_software_cassette.png" alt = "user_image" width = "40" height = "40">
+        <% else %>
+            <img src = "<%= @otheruser.profile %>" alt = "user_image" width = "40" height = "40">
+        <% end %>
+        <%= @otheruser.name %>さんのページ</h1>
+    <h1><%= @otheruser.name %>さんの投稿</h1>
+    <% if !@otherposts.empty? %>
+        <% @otherposts.reverse_each do |otherpost|%>
+            <form action = "/talkroom/<%= %>" method ="post">
+                <p><%= otherpost["articletime"].strftime("%Y-%m-%d %H:%M:%S") %></p>
+                <p><%= Model.find(otherpost.model_id).platform %> | 
+                <%= Game.find(otherpost.game_id).gamename %> |   
+                <%= Category.find(otherpost.category_id).purpose %> | 
+                <% joinpeople = Join.where(talkroom_id: Talkroom.find_by(recruit_id: otherpost.id)).where.not(user_id: @otheruser).count %>
+                定員 <%= joinpeople %>/<%= otherpost["applicant"] %> | 
+                <%= otherpost["article"] %> | 
+                <% if session[:user] != @otheruser.id && otherpost.status == false && joinpeople != otherpost["applicant"] && Join.find_by(user_id: session[:user], talkroom_id: Talkroom.find_by(recruit_id: otherpost.id)) == nil %>
+                    <input type = "submit" value = "募集中!">
+                <% elsif Join.find_by(user_id: session[:user], talkroom_id: Talkroom.find_by(recruit_id: otherpost.id)) != nil && session[:user] != @otheruser.id %>
+                    <input type = "submit" value = "トークに戻る">
+                <% elsif joinpeople == otherpost["applicant"] %>
+                    満員
+                <% elsif otherpost.status == true %>
+                    募集終了
+                <% end %>
+            </form>
+        <% end %>
+    <% else %>
+        <b>投稿がありません</b>
+    <% end %>
 </section>

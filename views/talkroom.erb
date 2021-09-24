@@ -19,6 +19,11 @@
     <h1>チャット</h1>
     <% if !@chats.empty? %>
         <% @chats.each do |chat| %>
+            <% if User.find_by(id: chat.user_id).profile.empty? %>
+                <img src = "/assets/img/game_software_cassette.png" alt = "user_image" width = "40" height = "40">
+            <% else %>
+                <img src = "<%= User.find_by(id: chat.user_id).profile %>" alt = "user_image" width = "40" height = "40">
+            <% end %>
             <%= User.find_by(id: chat.user_id).name %>：
             <%= chat["comment"] %><br>
         <% end %>

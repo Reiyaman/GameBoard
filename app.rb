@@ -253,6 +253,8 @@ post '/chat/:id' do #メッセージ送信
 end
 
 get '/otherpage/:id' do
+    @otheruser = User.find(params[:id]) #飛んだユーザー情報
+    @otherposts = Recruit.where(user_id: params[:id]) #飛んだユーザーの投稿情報
     
     erb :home_other
 end
