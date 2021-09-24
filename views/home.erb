@@ -1,4 +1,5 @@
 <section>
+    <h1><%= current_user.name %>さんのページ</h1>
     <h1><%= current_user.name %>さんが今Join中のトークルーム</h1>
     <%# すでにJoinしている時マイページからも飛べるようにする%>
     <% if !@userjoins.empty? %>
@@ -8,9 +9,9 @@
                 <% recruit = Recruit.find_by(id: talkroom.recruit_id) %><%# joinした投稿レコード%>
                 <% if recruit.user_id != session[:user] %><%# 自分自身の投稿は表示しない%>
                     <p><% if User.find_by(id: recruit.user_id).profile.empty? %>
-                            <img src = "/assets/img/game_software_cassette.png" alt = "user_image" width = "40" height = "40">
+                            <a href = "/otherpage/<%= recruit.user_id %>"><img src = "/assets/img/game_software_cassette.png" alt = "user_image" width = "40" height = "40"></a>
                         <% else %>
-                            <img src = "<%= User.find_by(id: recruit.user_id).profile %>" alt = "user_image" width = "40" height = "40">
+                            <a href = "/otherpage/<%= recruit.user_id %>"><img src = "/assets/img/game_software_cassette.png" alt = "user_image" width = "40" height = "40"></a>
                         <% end %>
                         <%= User.find_by(id: recruit.user_id).name %>
                         <%= recruit["articletime"].strftime("%Y-%m-%d %H:%M:%S") %></p>

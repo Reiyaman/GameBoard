@@ -251,3 +251,8 @@ post '/chat/:id' do #メッセージ送信
     
     erb :talkroom
 end
+
+get '/otherpage/:id' do
+    
+    erb :home_other
+end

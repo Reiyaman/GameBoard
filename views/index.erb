@@ -16,10 +16,18 @@
 	</form>	
 	<% if !@recruits.empty? %>
 		<% @recruits.reverse_each do |recruit| %>
-			<p><% if User.find_by(id: recruit.user_id).profile.empty? %>
-			   		<img src = "/assets/img/game_software_cassette.png" alt = "user_image" width = "40" height = "40">
+			<p><% if User.find_by(id: recruit.user_id).profile.empty? %><%# プロフィール画像がなければ%>
+					<% if session[:user] != recruit.user_id  && session[:user] != nil %><%# 他のユーザーだけ押せる%>
+			   			<a href = "/otherpage/<%= recruit.user_id %>"><img src = "/assets/img/game_software_cassette.png" alt = "user_image" width = "40" height = "40"></a>
+			   		<% else %>
+			   			<img src = "/assets/img/game_software_cassette.png" alt = "user_image" width = "40" height = "40">
+			   		<% end %>
                <% else %>
-                	<img src = "<%= User.find_by(id: recruit.user_id).profile %>" alt = "user_image" width = "40" height = "40">
+               		<% if session[:user] != recruit.user_id  && session[:user] != nil %><%# 他のユーザーだけ押せる%>
+                		<a href = "/otherpage/<%= %>"><img src = "<%= User.find_by(id: recruit.user_id).profile %>" alt = "user_image" width = "40" height = "40"></a>
+                	<% else %>
+                		<img src = "<%= User.find_by(id: recruit.user_id).profile %>" alt = "user_image" width = "40" height = "40">
+                	<% end %>
                <% end %>
 	     	　 <%= User.find_by(id: recruit.user_id).name %>
 			   <%= recruit["articletime"].strftime("%Y-%m-%d %H:%M:%S") %></p>
