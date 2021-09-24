@@ -9,6 +9,10 @@ class User < ActiveRecord::Base
     has_many :chats
     has_many :joins
     has_many :join_talkrooms, :through => :joins, :source => :talkroom
+    has_many :reviewers, class_name: "Review", foreign_key: "review_id"
+    has_many :revieweds, class_name: "Review", foreign_key: "reviewed_id"
+    has_many :reviewer_users, :through => :reviewers, :source => :user
+    has_many :reviewed_users, :through => :revieweds, :source => :user
 end
 
 class Recruit < ActiveRecord::Base
@@ -49,4 +53,8 @@ end
 class Join < ActiveRecord::Base
     belongs_to :user
     belongs_to :talkroom
+    
+class Review < ActiveRecord::Base
+    belongs_to :review_id, class_name: "User"
+    belongs_to :reviewed_id, class_name: "User"
 end
