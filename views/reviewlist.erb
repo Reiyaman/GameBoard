@@ -1,5 +1,5 @@
 <section>
-    <form action = "/write/review" method = "get">
+    <form action = "/write/review/<%= @reviewed.id %>" method = "get">
         <h1><%= @reviewed.name %>さんの評価
         <input type = "submit" value = "評価する"></h1>
     </form>

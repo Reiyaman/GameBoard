@@ -9,7 +9,7 @@ class CreateRecruits < ActiveRecord::Migration[6.1]
       t.integer :user_id
       t.datetime :articletime
       t.boolean :status
-      
+  
       t.timestamps null: false
     end
   end

@@ -65,8 +65,8 @@ ActiveRecord::Schema.define(version: 2021_09_24_022004) do
 
   create_table "reviews", force: :cascade do |t|
     t.text "evaluation"
-    t.integer "star"
-    t.integer "review_id"
+    t.float "star"
+    t.integer "reviewer_id"
     t.integer "reviewed_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

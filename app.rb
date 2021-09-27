@@ -11,6 +11,7 @@ helpers do
     def current_user
         User.find_by(id: session[:user])
     end
+    
 end
 
 before do
@@ -265,7 +266,22 @@ get '/review/:id' do
     erb :reviewlist
 end
 
-get '/write/review' do
-    
+get '/write/review/:id' do
+    @reviewed = User.find(params[:id])
     erb :writereview
+end
+
+post '/write/review/:id' do #評価する
+    #reviewer.create(reviewed_id: params[:id]) #ユーザを評価する
+    
+    Review.create(
+        evaluation: params[:evaluation],
+        star: params[:star],
+        reviewer_id: session[:user],
+        reviewed_id: params[:id]#reviewer.find_by(reviewed_id: params[:id])
+        )
+    
+    @reviewed = User.find(params[:id])
+    @review =
+    erb :reviewlist
 end

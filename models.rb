@@ -9,10 +9,10 @@ class User < ActiveRecord::Base
     has_many :chats
     has_many :joins
     has_many :join_talkrooms, :through => :joins, :source => :talkroom
-    has_many :reviewers, class_name: "Review", foreign_key: "review_id"
-    has_many :revieweds, class_name: "Review", foreign_key: "reviewed_id"
-    has_many :reviewer_users, :through => :reviewers, :source => :user #自分が評価した人
-    has_many :reviewed_users, :through => :revieweds, :source => :user #自分を評価した人
+    has_many :reviewer, class_name: "Review", foreign_key: "reviewer_id"
+    has_many :reviewed, class_name: "Review", foreign_key: "reviewed_id"
+    has_many :reviewer_users, :through => :reviewer, :source => :reviewed #自分が評価した人
+    has_many :reviewed_users, :through => :reviewed, :source => :reviewer #自分を評価した人
 end
 
 class Recruit < ActiveRecord::Base
@@ -56,6 +56,6 @@ class Join < ActiveRecord::Base
 end
 
 class Review < ActiveRecord::Base
-    belongs_to :review_id, class_name: "User"
-    belongs_to :reviewed_id, class_name: "User"
+    belongs_to :reviewer, class_name: "User"
+    belongs_to :reviewed, class_name: "User"
 end
