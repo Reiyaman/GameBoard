@@ -4,7 +4,7 @@
         <% else %>
             <img src = "<%= current_user.profile %>" alt = "user_image" width = "40" height = "40">
         <% end %>
-        <%= current_user.name %>さんのページ</h1>
+        <%= current_user.name %>さん | 星<a href = "/review/<%= session[:user] %>">0</a></h1>
     <h1><%= current_user.name %>さんが今Join中のトークルーム</h1>
     <%# すでにJoinしている時マイページからも飛べるようにする%>
     <% if !@userjoins.empty? %>

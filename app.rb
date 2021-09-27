@@ -257,12 +257,13 @@ get '/otherpage/:id' do
     @otheruser = User.find(params[:id]) #飛んだユーザー情報
     @otherposts = Recruit.where(user_id: params[:id]) #飛んだユーザーの投稿情報
     
+    
     erb :home_other
 end
 
 get '/review/:id' do
     @reviewed = User.find(params[:id])
-    @review = 
+    @reviews = Review.where(reviewed_id: params[:id])
     erb :reviewlist
 end
 
@@ -282,6 +283,7 @@ post '/write/review/:id' do #評価する
         )
     
     @reviewed = User.find(params[:id])
-    @review =
+    @reviews = Review.where(reviewed_id: params[:id])
+    
     erb :reviewlist
 end
