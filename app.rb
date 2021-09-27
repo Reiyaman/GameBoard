@@ -95,6 +95,19 @@ get '/home' do #ホーム画面に飛ぶ
     @userjoins = Join.where(user_id: session[:user]) #ログインしているユーザーのJoin情報だけを取り出
     @talkrooms = Talkroom.all
     @joiner = Join.all
+    @reviewcounts = Review.where(reviewed_id: params[:id]).count #そのユーザーを評価した数
+    
+    reviewstars = Review.where(reviewed_id: params[:id])
+    star = 0
+    if @reviewcounts != 0
+        reviewstars.each do |reviewstar| #全評価の星の数を数える
+            star = star + reviewstar.star
+        end
+        @userstar = star / @reviewcounts #全評価の平均を出す
+    else 
+        @userstar = 0.0
+    
+    end
     erb :home
 end
 
@@ -256,7 +269,18 @@ end
 get '/otherpage/:id' do
     @otheruser = User.find(params[:id]) #飛んだユーザー情報
     @otherposts = Recruit.where(user_id: params[:id]) #飛んだユーザーの投稿情報
+    @reviewcounts = Review.where(reviewed_id: params[:id]).count #そのユーザーを評価した数
     
+    reviewstars = Review.where(reviewed_id: params[:id])
+    star = 0
+    if @reviewcounts != 0
+        reviewstars.each do |reviewstar| #全評価の星の数を数える
+            star = star + reviewstar.star
+        end
+        @userstar = star / @reviewcounts #全評価の平均を出す
+    else 
+        @userstar = 0.0
+    end
     
     erb :home_other
 end

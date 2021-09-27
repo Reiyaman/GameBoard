@@ -4,7 +4,11 @@
         <% else %>
             <img src = "<%= current_user.profile %>" alt = "user_image" width = "40" height = "40">
         <% end %>
-        <%= current_user.name %>さん | 星<a href = "/review/<%= session[:user] %>">0</a></h1>
+        <%= current_user.name %>さん | 
+        <span class = "star5_rating" data-rate = "<%= @userstar %>">
+        </span>
+        <a href = "/review/<%= current_user.id %>"><%= @reviewcounts %></a>
+    </h1>
     <h1><%= current_user.name %>さんが今Join中のトークルーム</h1>
     <%# すでにJoinしている時マイページからも飛べるようにする%>
     <% if !@userjoins.empty? %>
