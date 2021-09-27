@@ -264,23 +264,26 @@ end
 get '/review/:id' do
     @reviewed = User.find(params[:id])
     @reviews = Review.where(reviewed_id: params[:id])
+    
     erb :reviewlist
 end
 
 get '/write/review/:id' do
     @reviewed = User.find(params[:id])
+    
     erb :writereview
 end
 
 post '/write/review/:id' do #評価する
     #reviewer.create(reviewed_id: params[:id]) #ユーザを評価する
-    
-    Review.create(
-        evaluation: params[:evaluation],
-        star: params[:star],
-        reviewer_id: session[:user],
-        reviewed_id: params[:id]#reviewer.find_by(reviewed_id: params[:id])
-        )
+    if Review.find_by(evaluation: params[:evaluation], star: params[:star], reviewer_id: session[:user], reviewed_id: params[:id]) == nil
+        Review.create(
+            evaluation: params[:evaluation],
+            star: params[:star],
+            reviewer_id: session[:user],
+            reviewed_id: params[:id]#reviewer.find_by(reviewed_id: params[:id])
+            )
+    end
     
     @reviewed = User.find(params[:id])
     @reviews = Review.where(reviewed_id: params[:id])
