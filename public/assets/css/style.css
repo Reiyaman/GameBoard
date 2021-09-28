@@ -1,3 +1,17 @@
+section{
+  font-family: 'Yusei Magic', sans-serif;;
+  font-size: 1.1rem;
+}
+
+body{
+  font-family: 'Yusei Magic', sans-serif;;
+  font-size: 1.4rem;
+}
+
+input{
+  font-family: 'Yusei Magic', sans-serif;;
+  font-size: 1.0rem;
+}
 .stars span{
   display: flex;               /* 要素をフレックスボックスにする */
   flex-direction: row-reverse; /* 星を逆順に並べる */

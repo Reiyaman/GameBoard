@@ -306,7 +306,7 @@ end
 
 
 post '/search' do #ゲームタイトルで絞り検索
-    game = Game.find_by(gamename: params[:gamename]).id
+    game = Game.find_by(gamename: params[:gamename])
     @recruits = Recruit.where(game_id: game)
     @models = Model.all
     @categories = Category.all
