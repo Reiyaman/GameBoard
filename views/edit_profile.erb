@@ -1,0 +1,16 @@
+<section>
+    <h1>プロフィールの編集</h1>
+    <form action = "/sign_up" method = "post" enctype = "multipart/form-data">
+		<% if @miss == "error" %>
+			そのユーザー名は使用されています<br>
+		<% end %>
+		<b>ユーザー名</b><br>
+	    <input type = "text" name = "name" placeholder = "ユーザー名" required><br>
+	    <b>パスワード</b><br>
+	    <input type = "password" name = "password" placeholder = "パスワード" required><br>
+	    <input type = "password" name = "password_confirmation", placeholder = "もう一度パスワードを入力" required><br>
+	    <b>プロフィール画像</b><br>
+	    <input type = "file" name = "profile"><br>
+	    <input type = "submit" value = "新規登録">
+	</form>
+</section>
