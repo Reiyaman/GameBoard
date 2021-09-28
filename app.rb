@@ -54,8 +54,9 @@ post '/sign_in' do #ログイン
         user.login = true
         user.save
         redirect '/'
-    else
-        redirect '/'
+    else #ログイン失敗したら
+        @miss = "error"
+        erb :sign_in
     end
 end
 
