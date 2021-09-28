@@ -69,20 +69,22 @@ post '/sign_up' do #新規登録
         upload = Cloudinary::Uploader.upload(tempfile.path)
         img_url = upload['url']
     end
-    
-    user = User.create(
-        name: params[:name],
-        password: params[:password],
-        password_confirmation: params[:password_confirmation],
-        profile: img_url,
-        login: false
-        )
+    if User.find_by(name: params[:name]) == nil #まだ、そのユーザー名が使われていなかったら作成
+        user = User.create(
+            name: params[:name],
+            password: params[:password],
+            password_confirmation: params[:password_confirmation],
+            profile: img_url,
+            login: false
+            )
         
-    if user.persisted?
-        session[:user] = user.id
-        redirect '/'
-    else
-        redirect '/'
+        if user.persisted?
+            session[:user] = user.id
+            redirect '/'
+        end
+    else #すでにユーザー名使われていたら
+        @miss = "error"
+        erb :sign_up
     end
 end
 
