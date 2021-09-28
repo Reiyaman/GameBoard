@@ -50,7 +50,6 @@
     <h1><%= current_user.name %>さんの投稿</h1>
     <% if !@posts.empty? %>
         <% @posts.reverse_each do |posting| %>
-            <div style="display:inline-flex">
                 <%= posting["articletime"].strftime("%Y-%m-%d %H:%M:%S") %><br>
                 <%= Model.find_by(id: posting.model_id).platform %> | 
                 <%= Game.find_by(id: posting.game_id).gamename %> | 
@@ -58,31 +57,32 @@
                 <% joinpeople = Join.where(talkroom_id: Talkroom.find_by(recruit_id: posting.id)).where.not(user_id: posting.user_id).count %>
                 定員 <%= joinpeople %>/<%= posting["applicant"] %> |
                 <%= posting["article"] %> |
-                <form action = /edit/<%= posting.id%> method = "get">
-                <button type = "submit" valur = "編集">
-                    <i class="fas fa-pen"></i>
-                </button>
-                </form>
-                <form action = /delete/<%= posting.id%> method = "get">
-                <button type = "submit" valur = "削除">
-                    <i class="fas fa-trash"></i>
-                </button>
-                </form>
-                <form action = "/talkroom/<%= posting.id %>" method = "get">
-                    <% if posting.status == false %>
-                        募集中！
-                        <% if !@talkrooms.empty? %>
-                            <% @talkrooms.reverse_each do |talkroom| %><%# 他のユーザーがトークルームに入ると表示かつ、誰もいない時は非表示%>
-                                <% if posting == Recruit.find_by(id: talkroom.recruit_id) %>
-                                    <input type = "submit" value = "誰か遊びにきたよ!">
+                <div style="display:inline-flex">
+                    <form action = /edit/<%= posting.id%> method = "get">
+                        <button type = "submit" valur = "編集">
+                            <i class="fas fa-pen"></i>
+                        </button>
+                    </form>
+                    <form action = /delete/<%= posting.id%> method = "get">
+                        <button type = "submit" valur = "削除">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </form>
+                    <form action = "/talkroom/<%= posting.id %>" method = "get">
+                        <% if posting.status == false %>
+                            募集中！
+                            <% if !@talkrooms.empty? %>
+                                <% @talkrooms.reverse_each do |talkroom| %><%# 他のユーザーがトークルームに入ると表示かつ、誰もいない時は非表示%>
+                                    <% if posting == Recruit.find_by(id: talkroom.recruit_id) %>
+                                        <input type = "submit" value = "誰か遊びにきたよ!">
+                                    <% end %>
                                 <% end %>
                             <% end %>
+                        <% elsif posting.status == true %>
+                            募集終了
                         <% end %>
-                    <% elsif posting.status == true %>
-                        募集終了
-                    <% end %>
-                </form>
-            </div>
+                    </form>
+                </div>
         <% end %>
     <% else %>
     <b>投稿がありません</b>

@@ -1,14 +1,31 @@
 section{
   font-family: 'Yusei Magic', sans-serif;;
   font-size: 1.1rem;
+  background: #36A571;
 }
 
 body{
   font-family: 'Yusei Magic', sans-serif;;
   font-size: 1.4rem;
+  background: #36A571;
+}
+
+html{
+  height: 100%;
+  border: 15px solid #955722;
 }
 
 input{
+  font-family: 'Yusei Magic', sans-serif;;
+  font-size: 1.0rem;
+}
+
+select{
+  font-family: 'Yusei Magic', sans-serif;;
+  font-size: 1.0rem;
+}
+
+textarea{
   font-family: 'Yusei Magic', sans-serif;;
   font-size: 1.0rem;
 }

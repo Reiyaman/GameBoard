@@ -41,11 +41,13 @@
 			   <%= recruit["article"] %> | 
 			   <%# まだ、そのユーザーがJoinボタンを押していな時、かつログインしている時、かつ他のユーザー投稿であるとき、かつ募集中の時表示%>
 			   <% if session[:user] != nil && session[:user] != User.find_by(id: recruit.user_id).id && Join.find_by(user_id: session[:user], talkroom_id: Talkroom.find_by(recruit_id: recruit.id)) == nil && recruit.status == false && joinpeople != recruit["applicant"]%>
+			   		<i class="fas fa-door-open"></i>
 			   		<input type = "submit" value = "募集中！">
 			   <%# すでにJoinしている時 %>
 			   <% elsif Join.find_by(user_id: session[:user], talkroom_id: Talkroom.find_by(recruit_id: recruit.id)) != nil && session[:user] != User.find_by(id: recruit.user_id).id%>
 			   		<input type = "submit" value = "トークに戻る">
 			   <% elsif joinpeople == recruit["applicant"] %>
+			   		<i class="fas fa-door-closed"></i>
 			   		満員
 			   <%# 募集終了すると募集終了と出る%>
 			   <% elsif recruit.status == true %>
