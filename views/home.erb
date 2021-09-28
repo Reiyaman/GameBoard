@@ -19,6 +19,7 @@
     <%# すでにJoinしている時マイページからも飛べるようにする%>
     <% if !@userjoins.empty? %>
         <% @userjoins.each do |userjoin| %>
+            <div class = "box22">
             <% talkroom = Talkroom.find_by(id: userjoin.talkroom_id) %>
             <% if talkroom != nil %>
                 <% recruit = Recruit.find_by(id: talkroom.recruit_id) %><%# joinした投稿レコード%>
@@ -42,6 +43,7 @@
                     <p>
                 <% end %>
             <% end %>
+            </div>
         <% end %>
     <% else %>
         ありません。誰かの投稿を見てJoinしてみよう！
@@ -50,6 +52,7 @@
     <h1><%= current_user.name %>さんの投稿</h1>
     <% if !@posts.empty? %>
         <% @posts.reverse_each do |posting| %>
+            <div class = "box22">
                 <%= posting["articletime"].strftime("%Y-%m-%d %H:%M:%S") %><br>
                 <%= Model.find_by(id: posting.model_id).platform %> | 
                 <%= Game.find_by(id: posting.game_id).gamename %> | 
@@ -83,6 +86,7 @@
                         <% end %>
                     </form>
                 </div>
+            </div>
         <% end %>
     <% else %>
     <b>投稿がありません</b>

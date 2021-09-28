@@ -18,6 +18,7 @@
     </div><br>
     <% if !@reviews.empty? %>
         <% @reviews.reverse_each do |review|%>
+            <div class = "box23">
             <% if User.find_by(id: review.reviewer_id).profile.empty? %>
                 <a href = "/otherpage/<%= review.reviewer_id %>"><img src = "/assets/img/game_software_cassette.png" alt = "user_image" width = "40" height = "40"></a>
             <% else %>
@@ -28,6 +29,7 @@
             </span> |
             <%= review["evaluation"]%>
             <br>
+            </div>
         <% end %>
     <% else %>
         <b><%= @reviewed.name %>さんへの評価がありません</b>

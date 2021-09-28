@@ -12,6 +12,7 @@
     <h1><%= @otheruser.name %>さんの投稿</h1>
     <% if !@otherposts.empty? %>
         <% @otherposts.reverse_each do |otherpost|%>
+            <div class = "box22">
             <form action = "/talkroom/<%= otherpost.id %>" method ="post">
                 <p><%= otherpost["articletime"].strftime("%Y-%m-%d %H:%M:%S") %></p>
                 <p><%= Model.find(otherpost.model_id).platform %> | 
@@ -30,6 +31,7 @@
                     募集終了
                 <% end %>
             </form>
+            </div>
         <% end %>
     <% else %>
         <b>投稿がありません</b>

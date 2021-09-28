@@ -17,6 +17,7 @@
 	</form>	
 	<% if !@recruits.empty? %>
 		<% @recruits.reverse_each do |recruit| %>
+			<div class = "box22">
 			<p><% if User.find_by(id: recruit.user_id).profile.empty? %><%# プロフィール画像がなければ%>
 					<% if session[:user] != recruit.user_id  && session[:user] != nil %><%# 他のユーザーだけ押せる%>
 			   			<a href = "/otherpage/<%= recruit.user_id %>"><img src = "/assets/img/game_software_cassette.png" alt = "user_image" width = "40" height = "40"></a>
@@ -55,7 +56,7 @@
 			   <% end %>
 			   </form>
 			</p>
-			--------------------------------------------
+			</div>
         <% end %>
     <% else %>
     	<b>投稿がありません</b>

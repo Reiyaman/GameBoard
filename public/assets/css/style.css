@@ -1,18 +1,70 @@
-section{
-  font-family: 'Yusei Magic', sans-serif;;
-  font-size: 1.1rem;
-  background: #36A571;
+.kokuban {
+position: relative;
+margin: 2em auto;
+padding: 2.2em 1em 1em;
+width: 90%;
+background-color: #006633;
+color: #fff;
+border: 8px solid #b2771f;
+border-radius: 3px;
+box-shadow: 0 0 5px #333, 0 0 5px #555 inset;
+line-height: 2em;
 }
 
+.kokuban::before,
+.kokuban::after {
+position: absolute;
+content: '';
+bottom: 0;
+} 
+
+.kokuban::before {
+right: 10px;
+border: solid 3px #fff;
+width: 20px; 
+border-radius: 3px 2px 0 2px;
+}
+
+.kokuban::after {
+right: 40px;
+border: solid 3px #ffff6b;
+width: 15px; 
+border-radius: 8px 5px 2px 5px;
+}
+
+.box22{
+    padding: 0.1em 0.4em;
+    margin: 1em 20em;
+    background: #ACD0C0;
+    border-left: solid 6px #5bb7ae;
+    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.33);
+}
+
+.box22 p {
+    margin: 0; 
+    padding: 0;
+}
+
+.box23{
+    padding: 0.1em 0.4em;
+    margin: 1em 20em;
+    background: #FBC6E7;
+    border-left: solid 6px #EB50A9;
+    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.33);
+}
+
+.box23 p {
+    margin: 0; 
+    padding: 0;
+}
 body{
   font-family: 'Yusei Magic', sans-serif;;
-  font-size: 1.4rem;
-  background: #36A571;
+  font-size: 1.1rem;
 }
 
-html{
-  height: 100%;
-  border: 15px solid #955722;
+section{
+  font-family: 'Yusei Magic', sans-serif;;
+  font-size: 1.0rem;
 }
 
 input{
