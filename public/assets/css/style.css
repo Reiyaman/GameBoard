@@ -12,14 +12,21 @@ input{
   font-family: 'Yusei Magic', sans-serif;;
   font-size: 1.0rem;
 }
+
+button{
+  background: transparent;
+  border: none;
+  cursor: pointer;             /* カーソルが上に乗ったときに指の形にする */
+}
+
 .stars span{
   display: flex;               /* 要素をフレックスボックスにする */
   flex-direction: row-reverse; /* 星を逆順に並べる */
-  justify-content: flex-end;   /* 逆順なので、左寄せにする */
+  justify-content: center;/* 逆順なので、左寄せにする */
 }
 
 .stars input[type='radio']{
-  display: none;               /* デフォルトのラジオボタンを非表示にする */
+  display: none;/* デフォルトのラジオボタンを非表示にする */
 }
 
 .stars label{

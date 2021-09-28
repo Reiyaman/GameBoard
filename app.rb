@@ -185,7 +185,7 @@ end
 
 get '/home' do #ホーム画面に飛ぶ
     @posts = Recruit.where(user_id: session[:user]) #ログインしているユーザーの投稿情報だけ取り出す
-    @userjoins = Join.where(user_id: session[:user]) #ログインしているユーザーのJoin情報だけを取り出
+    @userjoins = Join.where(user_id: session[:user]).where.not(talkroom_id: Talkroom.find_by(recruit_id: Recruit.find_by(user_id: session[:user]))) #ログインしているユーザーのJoin情報だけを取り出
     @talkrooms = Talkroom.all
     @joiner = Join.all
     @reviewcounts = Review.where(reviewed_id: session[:user]).count #そのユーザーを評価した数

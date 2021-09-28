@@ -1,4 +1,4 @@
-<section>
+<section style="text-align:center">
     <form action = "/exit/<%= @joinrecruit.id %>" method = "post">
         <h1><%= User.find_by(id: @joinrecruit.user_id).name %>さんと
         <%= Game.find_by(id: @joinrecruit.game_id).gamename%>で遊ぶためのトークルーム

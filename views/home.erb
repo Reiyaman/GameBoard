@@ -1,4 +1,4 @@
-<section>
+<section style="text-align:center">
     <%= @message %>
     <form action = "/edit/profile" method = "get">
         <h1><% if current_user.profile.empty? %>
@@ -7,7 +7,9 @@
                 <img src = "<%= current_user.profile %>" alt = "user_image" width = "40" height = "40">
             <% end %>
             <%= current_user.name %>さん
-            <input type = "submit" value = "プロフィール変更"> |
+            <button type = "submit" value = "プロフィール変更"> 
+            <i class="fas fa-user-edit"></i>
+            </button>|
             <span class = "star5_rating" data-rate = "<%= @userstar %>">
             </span>
             <a href = "/review/<%= current_user.id %>"><%= @reviewcounts %></a>
@@ -48,29 +50,39 @@
     <h1><%= current_user.name %>さんの投稿</h1>
     <% if !@posts.empty? %>
         <% @posts.reverse_each do |posting| %>
-            <form action = "/talkroom/<%= posting.id %>" method = "get">
-                <p><%= posting["articletime"].strftime("%Y-%m-%d %H:%M:%S") %></p>
-                <p><%= Model.find_by(id: posting.model_id).platform %> | 
+            <div style="display:inline-flex">
+                <%= posting["articletime"].strftime("%Y-%m-%d %H:%M:%S") %><br>
+                <%= Model.find_by(id: posting.model_id).platform %> | 
                 <%= Game.find_by(id: posting.game_id).gamename %> | 
                 <%= Category.find_by(id: posting.category_id).purpose %> | 
                 <% joinpeople = Join.where(talkroom_id: Talkroom.find_by(recruit_id: posting.id)).where.not(user_id: posting.user_id).count %>
                 定員 <%= joinpeople %>/<%= posting["applicant"] %> |
-                <%= posting["article"] %> | 
-                <a href = "/edit/<%= posting.id %>">編集</a>
-                <a href = "/delete/<%= posting.id %>">削除</a>
-                <% if posting.status == false %>
-                    募集中！
-                    <% if !@talkrooms.empty? %>
-                        <% @talkrooms.reverse_each do |talkroom| %><%# 他のユーザーがトークルームに入ると表示かつ、誰もいない時は非表示%>
-                            <% if posting == Recruit.find_by(id: talkroom.recruit_id) %>
-                                <input type = "submit" value = "誰か遊びにきたよ!">
+                <%= posting["article"] %> |
+                <form action = /edit/<%= posting.id%> method = "get">
+                <button type = "submit" valur = "編集">
+                    <i class="fas fa-pen"></i>
+                </button>
+                </form>
+                <form action = /delete/<%= posting.id%> method = "get">
+                <button type = "submit" valur = "削除">
+                    <i class="fas fa-trash"></i>
+                </button>
+                </form>
+                <form action = "/talkroom/<%= posting.id %>" method = "get">
+                    <% if posting.status == false %>
+                        募集中！
+                        <% if !@talkrooms.empty? %>
+                            <% @talkrooms.reverse_each do |talkroom| %><%# 他のユーザーがトークルームに入ると表示かつ、誰もいない時は非表示%>
+                                <% if posting == Recruit.find_by(id: talkroom.recruit_id) %>
+                                    <input type = "submit" value = "誰か遊びにきたよ!">
+                                <% end %>
                             <% end %>
                         <% end %>
+                    <% elsif posting.status == true %>
+                        募集終了
                     <% end %>
-                <% elsif posting.status == true %>
-                    募集終了
-                <% end %>
-            </form></p>
+                </form>
+            </div>
         <% end %>
     <% else %>
     <b>投稿がありません</b>
