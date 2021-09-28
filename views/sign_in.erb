@@ -3,9 +3,7 @@
         <div>
             <div>
                 <h1>ログイン</h1>
-                <% if @miss == "error" %>
-                    ユーザー名、またはパスワードが違います。<br>
-                <% end %>
+                <%= @miss %><br>
                 <b>ユーザー名</b><br>
                 <input  name = "name" placeholder = "名前を入力" required><br>
                 <b>パスワード</b><br>

@@ -55,7 +55,7 @@ post '/sign_in' do #ログイン
         user.save
         redirect '/'
     else #ログイン失敗したら
-        @miss = "error"
+        @miss = "ユーザー名、またはパスワードが違います。"
         erb :sign_in
     end
 end
@@ -81,9 +81,14 @@ post '/sign_up' do #新規登録
         if user.persisted?
             session[:user] = user.id
             redirect '/'
+        
+        else
+            @miss = "パスワードと確認パスワードが一致しません"
+            erb :sign_up
         end
+        
     else #すでにユーザー名使われていたら
-        @miss = "error"
+        @miss = params[:name] + "は使用されています"
         erb :sign_up
     end
 end
@@ -93,14 +98,99 @@ get '/sign_out' do #ログアウト
     redirect '/'
 end
 
+get '/edit/profile' do #プロフィール変更ページ
+    @user = User.find(session[:user])
+    erb :edit_profile
+end
+
+post '/edit/profile' do #プロフィール変更
+    if User.find_by(name: params[:name]) == nil || params[:name] == current_user.name #まだ、そのユーザー名が他のユーザーに使われていなかったら作成
+        img_url = '' #ファイルのアップロード
+        if params[:profile]
+            img = params[:profile]
+            tempfile = img[:tempfile]
+            upload = Cloudinary::Uploader.upload(tempfile.path)
+            img_url = upload['url']
+        else 
+            img_url = current_user.profile
+        end
+        
+        p "q"
+        if params[:password] == params[:password_confirmation] && params[:name] != "" #パスワードと確認パスワードが一緒でユーザー名が何か入力されてる時
+            user = User.find(session[:user])
+            user.name = params[:name]
+            user.password = params[:password]
+            user.password_confirmation = params[:password_confirmation]
+            user.profile = img_url
+
+            if params[:password] == "" && params[:name] != current_user.name && params[:profile] == nil #ユーザー名だけ変更
+                @message = "ユーザー名を変更しました"
+            elsif params[:password] != "" && params[:name] == current_user.name && params[:profile] == nil #パスワードだけ変更
+                @message = "パスワードを変更しました"
+            elsif params[:password] == "" && params[:name] == current_user.name && params[:profile] != nil #プロフィール画像だけ変更
+                @message = "プロフィール画像を変更しました"
+            elsif params[:password] != "" && params[:name] != current_user.name && params[:profile] == nil #ユーザー名、パスワード変更
+                @message = "ユーザー名、パスワードを変更しました"
+            elsif params[:password] != "" && params[:name] == current_user.name && params[:profile] != nil #パスワード、プロフィール画像変更
+                @message = "パスワード、プロフィール画像を変更しました"
+            elsif params[:password] == "" && params[:name] != current_user.name && params[:profile] != nil #ユーザー名、プロフィール画像変更
+                @message = "ユーザー名、プロフィール画像を変更しました"
+            elsif params[:password] != "" && params[:name] != current_user.name && params[:profile] != nil#全部変更
+                @message = "プロフィール全て変更しました" 
+            end
+            p "l"
+            user.save
+            
+            @posts = Recruit.where(user_id: session[:user]) #ログインしているユーザーの投稿情報だけ取り出す
+            @userjoins = Join.where(user_id: session[:user]) #ログインしているユーザーのJoin情報だけを取り出
+            @talkrooms = Talkroom.all
+            @joiner = Join.all
+            @reviewcounts = Review.where(reviewed_id: session[:user]).count #そのユーザーを評価した数
+    
+            reviewstars = Review.where(reviewed_id: session[:user])
+            star = 0
+            if @reviewcounts != 0
+                reviewstars.each do |reviewstar| #全評価の星の数を数える
+                    star = star + reviewstar.star
+                end
+                @userstar = star / @reviewcounts #全評価の平均を出す
+            else 
+                @userstar = 0.0
+    
+            end
+            erb :home
+            
+        elsif  params[:password] != params[:password_confirmation] &&  params[:name] != ""#パスワードと確認パスワードが一致しなければ
+            @message = "パスワードと確認パスワードが一致しません"
+            
+            @user = User.find(session[:user])
+            p "r"
+            erb :edit_profile
+        else #何も入力されてなければ
+            redirect '/home'
+            p "y"
+        end
+        
+    elsif User.find_by(name: params[:name]) != nil && params[:name] != current_user.name#すでにユーザー名使われていたら
+        @message = params[:name] + "は使用されています"
+        @user = User.find(session[:user])
+        p "x"
+        erb :edit_profile
+    
+    #else #何も入力されてなければ
+        #redirect '/home'
+       # p "y"
+    end
+end
+
 get '/home' do #ホーム画面に飛ぶ
     @posts = Recruit.where(user_id: session[:user]) #ログインしているユーザーの投稿情報だけ取り出す
     @userjoins = Join.where(user_id: session[:user]) #ログインしているユーザーのJoin情報だけを取り出
     @talkrooms = Talkroom.all
     @joiner = Join.all
-    @reviewcounts = Review.where(reviewed_id: params[:id]).count #そのユーザーを評価した数
+    @reviewcounts = Review.where(reviewed_id: session[:user]).count #そのユーザーを評価した数
     
-    reviewstars = Review.where(reviewed_id: params[:id])
+    reviewstars = Review.where(reviewed_id: session[:user])
     star = 0
     if @reviewcounts != 0
         reviewstars.each do |reviewstar| #全評価の星の数を数える

@@ -1,9 +1,7 @@
 <section>
 	<h1>新規登録</h1>
 	<form action = "/sign_up" method = "post" enctype = "multipart/form-data">
-		<% if @miss == "error" %>
-			そのユーザー名は使用されています<br>
-		<% end %>
+		<%= @miss %><br>
 		<b>ユーザー名(必須)</b><br>
 	    <input type = "text" name = "name" placeholder = "ユーザー名" required><br>
 	    <b>パスワード(必須)</b><br>
