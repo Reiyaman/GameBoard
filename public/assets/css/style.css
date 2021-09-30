@@ -106,6 +106,9 @@ color: #FFEF90;
 text-decoration: underline;
 }
 
+h1{
+  color: #FF99C9;
+}
 .stars span{
   display: flex;               /* 要素をフレックスボックスにする */
   flex-direction: row-reverse; /* 星を逆順に並べる */

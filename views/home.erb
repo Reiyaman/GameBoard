@@ -1,7 +1,7 @@
 <section style="text-align:center">
     <%= @message %>
-    <form action = "/edit/profile" method = "get">
-        <h1><% if current_user.profile.empty? %>
+    <h2><form action = "/edit/profile" method = "get">
+        <b><% if current_user.profile.empty? %>
                 <img src = "/assets/img/game_software_cassette.png" alt = "user_image" width = "40" height = "40">
             <% else %>
                 <img src = "<%= current_user.profile %>" alt = "user_image" width = "40" height = "40">
@@ -9,12 +9,13 @@
             <%= current_user.name %>さん
             <button type = "submit" value = "プロフィール変更"> 
             <i class="fas fa-user-edit"></i>
-            </button>|
+            </button>
             <span class = "star5_rating" data-rate = "<%= @userstar %>">
             </span>
             <a href = "/review/<%= current_user.id %>"><%= @reviewcounts %></a>
     </form>
-    </h1>
+    </b>
+    </h2>
     <h1><%= current_user.name %>さんが今Join中のトークルーム</h1>
     <%# すでにJoinしている時マイページからも飛べるようにする%>
     <%# 自分自身の投稿のトークルームはカウントしないようにする%>

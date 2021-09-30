@@ -1,14 +1,14 @@
 <section style="text-align:center">
-    <h1><% if @otheruser.profile.empty? %>
+    <h2><% if @otheruser.profile.empty? %>
             <img src = "/assets/img/game_software_cassette.png" alt = "user_image" width = "40" height = "40">
         <% else %>
             <img src = "<%= @otheruser.profile %>" alt = "user_image" width = "40" height = "40">
         <% end %>
-        <%= @otheruser.name %>さん |
+        <%= @otheruser.name %>さん 
         <span class = "star5_rating" data-rate = "<%= @userstar %>">
         </span>
         <a href = "/review/<%= @otheruser.id %>"><%= @reviewcounts %></a>
-        </h1> 
+    </h2>
     <h1><%= @otheruser.name %>さんの投稿</h1>
     <% if !@otherposts.empty? %>
         <% @otherposts.reverse_each do |otherpost|%>
