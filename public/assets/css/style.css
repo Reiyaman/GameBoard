@@ -109,6 +109,16 @@ text-decoration: underline;
 h1{
   color: #FF99C9;
 }
+
+#right-box{
+  float: right;
+}
+
+#footer{
+  clear:both;
+  text-align: center;
+  margin-top: 100px;
+}
 .stars span{
   display: flex;               /* 要素をフレックスボックスにする */
   flex-direction: row-reverse; /* 星を逆順に並べる */

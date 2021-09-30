@@ -1,20 +1,22 @@
 <section style="text-align:center">
 	<h1>最近の募集</h1>
-	<b>カテゴリーで絞る</b><br>
-	<form action = "/search" method = "post">
-		機種
-		<% @models.each do |model| %>
-			<a href = "/?model=<%= model.id %>"><%= model.platform %></a>
-		<% end %><br>
-		目的
-		<% @categories.each do |category| %>
-			<a href = "/?category=<%= category.id %>"><%= category.purpose %></a>
-		<% end %><br>
-		ゲームタイトル
-		<input type = "text" name = "gamename" placeholder = "ゲームタイトル">
-		<button type = "submit" value = "検索"><i class="fas fa-search"></i>
-		</button>
-	</form>	
+	<div id = "right-box">
+		<b>カテゴリーで絞る</b><br>
+		<form action = "/search" method = "post">
+			機種
+			<% @models.each do |model| %>
+				<a href = "/?model=<%= model.id %>"><%= model.platform %></a>
+			<% end %><br>
+			目的
+			<% @categories.each do |category| %>
+				<a href = "/?category=<%= category.id %>"><%= category.purpose %></a>
+			<% end %><br>
+			ゲームタイトル
+			<input type = "text" name = "gamename" placeholder = "ゲームタイトル">
+			<button type = "submit" value = "検索"><i class="fas fa-search"></i>
+			</button>
+		</form>
+	</div>
 	<% if !@recruits.empty? %>
 		<% @recruits.reverse_each do |recruit| %>
 			<div class = "box22">
