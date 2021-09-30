@@ -1,7 +1,7 @@
 <section style="text-align:center">
     <form action = "/exit/<%= @joinrecruit.id %>" method = "post">
         <h1><%= User.find_by(id: @joinrecruit.user_id).name %>さんと
-        <%= Game.find_by(id: @joinrecruit.game_id).gamename%>で遊ぶためのトークルーム | 
+        <%= Game.find_by(id: @joinrecruit.game_id).gamename%>で遊ぶためのトークルーム
         <% if session[:user] == User.find(@joinrecruit.user_id).id %>
             <input type = "submit" value = "終了する"></h1>
         <% else %>
@@ -17,7 +17,7 @@
             <% end %>
         <% end %>
     <% end %></b><br>
-    <h1>チャット</h1>
+    <h2>チャット</h2>
     <% if !@chats.empty? %>
         <% @chats.each do |chat| %>
             <!--吹き出しはじまり-->
