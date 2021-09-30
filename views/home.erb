@@ -8,7 +8,7 @@
             <% end %>
             <%= current_user.name %>さん
             <button type = "submit" value = "プロフィール変更"> 
-            <i class="fas fa-user-edit"></i>
+            <i class="fas fa-user-edit fa-2x color"></i>
             </button>
             <span class = "star5_rating" data-rate = "<%= @userstar %>">
             </span>
@@ -79,13 +79,13 @@
                     <% if posting.status == false %><%# 募集終了したら投稿を編集できないようにする%>
                         <form action = /edit/<%= posting.id%> method = "get">
                                 <button type = "submit" valur = "編集">
-                                    <i class="fas fa-pen"></i>
+                                    <i class="fas fa-pen color"></i>
                                 </button>
                         </form>
                     <% end %>
                     <form action = /delete/<%= posting.id%> method = "get">
                         <button type = "submit" valur = "削除">
-                            <i class="fas fa-trash"></i>
+                            <i class="fas fa-trash color"></i>
                         </button>
                     </form>
                     <form action = "/talkroom/<%= posting.id %>" method = "get">

@@ -1,20 +1,26 @@
 <section style="text-align:center">
     <div style="display:inline-flex">
-    <form action = "/write/review/<%= @reviewed.id %>" method = "get">
-        <h1><%= @reviewed.name %>さんの評価
-        <% if @reviewed.name != current_user.name %> <%# 自分自身には評価しない%>
-            <input type = "submit" value = "評価する">
-        <% end %></h1>
-    </form>
     <% if @reviewed.name != current_user.name %>
         <form action = "/otherpage/<%= @reviewed.id %>" method = "get">
-            <h1><input type = "submit" value = "戻る"></h1>
+            <h1><button type = "submit" value = "戻る">
+                <i class="fas fa-arrow-left fa-2x posicolor4"></i>
+            </button></h1>
         </form>
     <% else %>
         <form action = "/home" method = "get">
-            <h1><input type = "submit" value = "戻る"></h1>
+            <h1><button type = "submit" value = "戻る">
+                <i class="fas fa-arrow-left fa-2x posicolor4"></i>
+            </button></h1>
         </form>
     <% end %>
+    <form action = "/write/review/<%= @reviewed.id %>" method = "get">
+        <h1><%= @reviewed.name %>さんの評価
+        <% if @reviewed.name != current_user.name %> <%# 自分自身には評価しない%>
+            <button type = "submit" value = "評価する">
+                <i class="fas fa-plus fa-2x posicolor3"></i>
+            </button>
+        <% end %></h1>
+    </form>
     </div><br>
     <% if !@reviews.empty? %>
         <% @reviews.reverse_each do |review|%>

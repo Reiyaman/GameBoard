@@ -5,7 +5,7 @@
         <% if session[:user] == User.find(@joinrecruit.user_id).id %>
             <input type = "submit" value = "終了する"></h1>
         <% else %>
-            <i class="fas fa-door-open"></i>
+            <i class="fas fa-door-open color"></i>
             <input type = "submit" value = "退出する"></h1>
         <% end %>
     </form>

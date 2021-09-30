@@ -57,6 +57,7 @@ border-radius: 8px 5px 2px 5px;
     margin: 0; 
     padding: 0;
 }
+
 body{
   font-family: 'Yusei Magic', sans-serif;;
   font-size: 1.1rem;
@@ -110,8 +111,14 @@ h1{
   color: #FF99C9;
 }
 
+img{
+  position:relative;
+  top: 10px;
+}
+
 #right-box{
   float: right;
+  margin-right: -11px;
 }
 
 #footer{
@@ -119,6 +126,43 @@ h1{
   text-align: center;
   margin-top: 100px;
 }
+
+.color{
+  color: white;
+}
+
+.posicolor{
+  color: white;
+  position:relative;
+  top:5px;
+}
+
+.posicolor2{
+  color: white;
+  position:relative;
+  top:8px;
+}
+
+.posicolor3{ /* 評価するボタン*/
+  color: white;
+  position: relative;
+  left: 9px;
+}
+
+.posicolor4{ /* 戻るするボタン*/
+  color: white;
+  position: relative;
+  right: 15px;
+  up: 15px;
+}
+
+.posicolor5{ /* 戻るするボタン*/
+  color: white;
+  position: relative;
+  left: 15px;
+  bottom: 33px;
+}
+
 .stars span{
   display: flex;               /* 要素をフレックスボックスにする */
   flex-direction: row-reverse; /* 星を逆順に並べる */
