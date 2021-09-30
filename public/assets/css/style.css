@@ -88,6 +88,24 @@ button{
   cursor: pointer;             /* カーソルが上に乗ったときに指の形にする */
 }
 
+a {
+font-weight: bold;
+text-decoration: none;
+}
+
+a:link { /*アクセスしたことのないリンク*/
+color: #FFEF90;
+}
+
+a:visited { /*アクセスしたことのあるリンク*/
+color: #FFEF90;
+}
+
+a:hover {/*マウスが上に乗っている状態*/
+color: #FFEF90;
+text-decoration: underline;
+}
+
 .stars span{
   display: flex;               /* 要素をフレックスボックスにする */
   flex-direction: row-reverse; /* 星を逆順に並べる */
