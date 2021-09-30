@@ -35,8 +35,8 @@
 			   <%= recruit["articletime"].strftime("%Y-%m-%d %H:%M:%S") %></p>
 			<p><form action = "/talkroom/<%= recruit.id %>" method = "post">
 			   <%= Model.find_by(id: recruit.model_id).platform %> | 
-			   <%= Category.find_by(id: recruit.category_id).purpose %> |
 			   <%= Game.find_by(id: recruit.game_id).gamename %> |
+			   <%= Category.find_by(id: recruit.category_id).purpose %> |
 			   <% joinpeople = Join.where(talkroom_id: Talkroom.find_by(recruit_id: recruit.id)).where.not(user_id: recruit.user_id).count %>
 			   定員 <%= joinpeople %>/<%= recruit["applicant"] %> | 
 			   <%= recruit["article"] %> | 
