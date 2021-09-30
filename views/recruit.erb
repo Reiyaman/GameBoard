@@ -8,7 +8,7 @@
             <% end %>
         </select><br>
         ゲームタイトル
-        <input type = "text" name = "gamename" placeholder = "タイトル名">
+        <input type = "text" name = "gamename" placeholder = "タイトル名" required>
         </input><br>
         カテゴリー
         <select name = "purpose">
@@ -17,7 +17,7 @@
             <% end %>
         </select><br>
         募集人数
-        <input type = "number" name = "applicant"><br>
+        <input type = "number" name = "applicant" required><br>
         投稿内容<br>
         <textarea name = "article" rows = "5" cols = "40" placeholder = "200字以内"></textarea><br>
         <input type = "submit" value = "投稿する！">

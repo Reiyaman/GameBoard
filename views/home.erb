@@ -17,13 +17,27 @@
     </h1>
     <h1><%= current_user.name %>さんが今Join中のトークルーム</h1>
     <%# すでにJoinしている時マイページからも飛べるようにする%>
+    <%# 自分自身の投稿のトークルームはカウントしないようにする%>
+    <% @joinbool = true %>
     <% if !@userjoins.empty? %>
         <% @userjoins.each do |userjoin| %>
-            <div class = "box22">
             <% talkroom = Talkroom.find_by(id: userjoin.talkroom_id) %>
             <% if talkroom != nil %>
                 <% recruit = Recruit.find_by(id: talkroom.recruit_id) %><%# joinした投稿レコード%>
-                <% if recruit.user_id != session[:user] %><%# 自分自身の投稿は表示しない%>
+                <% if recruit != nil && recruit.user_id == session[:user] %><%# 自分自身の投稿は表示しない%>
+                    <% @joinbool = false %>
+                <% end %>
+            <% end %>
+        <% end %>
+    <% end %>
+    <%# joinしている投稿を表示(自分以外かつjoinの数が1つでない時)%>
+    <% if !@userjoins.empty? && @joinscount >= 1 && @joinbool == true || @joinbool == false && @joinscount > 1 %>
+        <% @userjoins.each do |userjoin| %>
+            <% talkroom = Talkroom.find_by(id: userjoin.talkroom_id) %>
+            <% if talkroom != nil %>
+                <% recruit = Recruit.find_by(id: talkroom.recruit_id) %><%# joinした投稿レコード%>
+                <% if recruit != nil && recruit.user_id != session[:user] %><%# 自分自身の投稿は表示しない%>
+                    <div class = "box22">
                     <p><% if User.find_by(id: recruit.user_id).profile.empty? %>
                             <a href = "/otherpage/<%= recruit.user_id %>"><img src = "/assets/img/game_software_cassette.png" alt = "user_image" width = "40" height = "40"></a>
                         <% else %>
@@ -32,21 +46,21 @@
                         <%= User.find_by(id: recruit.user_id).name %>
                         <%= recruit["articletime"].strftime("%Y-%m-%d %H:%M:%S") %></p>
                     <p><form action = "/talkroom/<%= recruit.id %>" method = "get">
-                        <%= Model.find_by(id: recruit.model_id).platform %> | 
-			            <%= Category.find_by(id: recruit.category_id).purpose %> |
-			            <%= Game.find_by(id: recruit.game_id).gamename %> |
+                        <%= Model.find_by(id: recruit.model_id).platform %>
+                        <%= Game.find_by(id: recruit.game_id).gamename %>
+			            <%= Category.find_by(id: recruit.category_id).purpose %>
 			            <% joinpeople = Join.where(talkroom_id: Talkroom.find_by(recruit_id: recruit.id)).where.not(user_id: recruit.user_id).count %>
-			            定員 <%= joinpeople %>/<%= recruit["applicant"] %> |
+			            定員 <%= joinpeople %>/<%= recruit["applicant"] %>
 			            <%= recruit["article"] %>
                         <input type = "submit" value = "トークに戻る">
                         </form>
-                    <p>
+                    </p>
+                    </div>
                 <% end %>
             <% end %>
-            </div>
         <% end %>
     <% else %>
-        ありません。誰かの投稿を見てJoinしてみよう！
+        <b>ありません。誰かの投稿を見てJoinしてみよう！</b>
     <% end %>
     
     <h1><%= current_user.name %>さんの投稿</h1>
@@ -59,7 +73,7 @@
                 <%= Category.find_by(id: posting.category_id).purpose %> | 
                 <% joinpeople = Join.where(talkroom_id: Talkroom.find_by(recruit_id: posting.id)).where.not(user_id: posting.user_id).count %>
                 定員 <%= joinpeople %>/<%= posting["applicant"] %> |
-                <%= posting["article"] %> |
+                <%= posting["article"] %><br>
                 <div style="display:inline-flex">
                     <form action = /edit/<%= posting.id%> method = "get">
                         <button type = "submit" valur = "編集">

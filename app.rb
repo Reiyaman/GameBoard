@@ -142,7 +142,8 @@ post '/edit/profile' do #プロフィール変更
             user.save
             
             @posts = Recruit.where(user_id: session[:user]) #ログインしているユーザーの投稿情報だけ取り出す
-            @userjoins = Join.where(user_id: session[:user]) #ログインしているユーザーのJoin情報だけを取り出
+            @joinscount = Join.where(user_id: session[:user]).count
+            @userjoins = Join.where(user_id: session[:user])
             @talkrooms = Talkroom.all
             @joiner = Join.all
             @reviewcounts = Review.where(reviewed_id: session[:user]).count #そのユーザーを評価した数
@@ -158,6 +159,8 @@ post '/edit/profile' do #プロフィール変更
                 @userstar = 0.0
     
             end
+            p @userjoins
+            p @joinscount
             erb :home
             
         elsif  params[:password] != params[:password_confirmation] &&  params[:name] != ""#パスワードと確認パスワードが一致しなければ
@@ -185,7 +188,9 @@ end
 
 get '/home' do #ホーム画面に飛ぶ
     @posts = Recruit.where(user_id: session[:user]) #ログインしているユーザーの投稿情報だけ取り出す
-    @userjoins = Join.where(user_id: session[:user]).where.not(talkroom_id: Talkroom.find_by(recruit_id: Recruit.find_by(user_id: session[:user]))) #ログインしているユーザーのJoin情報だけを取り出
+    
+    @joinscount = Join.where(user_id: session[:user]).count
+    @userjoins = Join.where(user_id: session[:user])#.where.not(talkroom_id: Talkroom.find_by(id: Recruit.find_by(user_id: session[:user]))) #ログインしているユーザーのJoin情報だけを取り出す
     @talkrooms = Talkroom.all
     @joiner = Join.all
     @reviewcounts = Review.where(reviewed_id: session[:user]).count #そのユーザーを評価した数
@@ -201,6 +206,8 @@ get '/home' do #ホーム画面に飛ぶ
         @userstar = 0.0
     
     end
+    p @userjoins
+    p @joinscount
     erb :home
 end
 
@@ -255,6 +262,15 @@ post '/edit/:id' do #編集する
 end
 
 get '/delete/:id' do
+    
+    #すでにトークルームがあったら
+    if !Join.where(talkroom_id: Talkroom.find_by(recruit_id: params[:id])).empty?
+        Join.destroy_by(talkroom_id: Talkroom.find_by(recruit_id: params[:id]))#joinレコード消す
+        #destroyjoin.destroy #joinレコード消す
+        destroyroom = Talkroom.find_by(recruit_id: params[:id]) #その投稿のトークルームを消す
+        destroyroom.destroy
+    end
+    
     recruit = Recruit.find(params[:id])
     recruit.destroy
     redirect '/home'
@@ -317,8 +333,8 @@ post '/exit/:id' do #トークルーム退出
     @joinrecruit = Recruit.find(params[:id])
     #終了ボタン押したら
     if session[:user] == User.find(@joinrecruit.user_id).id
-        destroyjoin = Join.find_by(talkroom_id: Talkroom.find_by(recruit_id: params[:id]))
-        destroyjoin.destroy #joinレコード消す
+        Join.destroy_by(talkroom_id: Talkroom.find_by(recruit_id: params[:id]))
+        #destroyjoin.destroy #joinレコード消す
         destroyroom = Talkroom.find_by(recruit_id: params[:id])
         destroyroom.destroy #talkroomレコード消す
         #@joinrecruit.destroy #投稿消す
