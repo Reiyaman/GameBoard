@@ -75,11 +75,13 @@
                 定員 <%= joinpeople %>/<%= posting["applicant"] %> |
                 <%= posting["article"] %><br>
                 <div style="display:inline-flex">
-                    <form action = /edit/<%= posting.id%> method = "get">
-                        <button type = "submit" valur = "編集">
-                            <i class="fas fa-pen"></i>
-                        </button>
-                    </form>
+                    <% if posting.status == false %><%# 募集終了したら投稿を編集できないようにする%>
+                        <form action = /edit/<%= posting.id%> method = "get">
+                                <button type = "submit" valur = "編集">
+                                    <i class="fas fa-pen"></i>
+                                </button>
+                        </form>
+                    <% end %>
                     <form action = /delete/<%= posting.id%> method = "get">
                         <button type = "submit" valur = "削除">
                             <i class="fas fa-trash"></i>
