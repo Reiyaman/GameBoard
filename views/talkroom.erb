@@ -20,13 +20,23 @@
     <h1>チャット</h1>
     <% if !@chats.empty? %>
         <% @chats.each do |chat| %>
-            <% if User.find_by(id: chat.user_id).profile.empty? %>
-                <img src = "/assets/img/game_software_cassette.png" alt = "user_image" width = "40" height = "40">
-            <% else %>
-                <img src = "<%= User.find_by(id: chat.user_id).profile %>" alt = "user_image" width = "40" height = "40">
-            <% end %>
-            <%= User.find_by(id: chat.user_id).name %>：
-            <%= chat["comment"] %><br>
+            <!--吹き出しはじまり-->
+            <div class="balloon5">
+                <div class="faceicon">
+                    <% if User.find_by(id: chat.user_id).profile.empty? %>
+                        <img src = "/assets/img/game_software_cassette.png" alt = "user_image" width = "40" height = "40">
+                    <% else %>
+                        <img src = "<%= User.find_by(id: chat.user_id).profile %>" alt = "user_image" width = "40" height = "40">
+                    <% end %><br>
+                    <%= User.find_by(id: chat.user_id).name %>
+                </div>
+                <div class="chatting">
+                    <div class="says">
+                        <p><%= chat["comment"] %></p>
+                    </div>
+                </div>
+            </div>
+            <!--吹き出し終わり-->
         <% end %>
     <% end %>
     <form action = "/chat/<%= @talkrooms.id %>" method = "post">
