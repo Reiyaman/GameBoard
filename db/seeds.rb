@@ -1,2 +1,2 @@
- Model.create([{platform: "PC"}, {platform: "Phone"}, {platform: "Switch"}, {platform: "PS4"}, {platform: "PS5"}, {platform: "XBox One"}])
+ Model.create([{platform: "PC"}, {platform: "Phone"}, {platform: "Switch"}, {platform: "PS4"}, {platform: "PS5"}, {platform: "XBox One"}, {platform: "その他"}])
  Category.create([{purpose: "協力プレイ"}, {purpose: "対戦"}, {purpose: "フレンド"}, {purpose: "その他"}])
