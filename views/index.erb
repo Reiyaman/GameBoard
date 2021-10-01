@@ -36,8 +36,7 @@
                <% end %>
 	     	　 <%= User.find_by(id: recruit.user_id).name %>
 			   <%= recruit["articletime"].strftime("%Y-%m-%d %H:%M:%S") %></p>
-			<p><form action = "/talkroom/<%= recruit.id %>" method = "post">
-			   <%= Model.find_by(id: recruit.model_id).platform %><span class = "color-line">|</span> 
+			<p><%= Model.find_by(id: recruit.model_id).platform %><span class = "color-line">|</span> 
 			   <%= Game.find_by(id: recruit.game_id).gamename %><span class = "color-line">|</span>
 			   <%= Category.find_by(id: recruit.category_id).purpose %> <span class = "color-line">|</span>
 			   <% joinpeople = Join.where(talkroom_id: Talkroom.find_by(recruit_id: recruit.id)).where.not(user_id: recruit.user_id).count %>
@@ -47,11 +46,15 @@
 			   <% end %><br>
 			   <%# まだ、そのユーザーがJoinボタンを押していな時、かつログインしている時、かつ他のユーザー投稿であるとき、かつ募集中の時表示%>
 			   <% if session[:user] != nil && session[:user] != User.find_by(id: recruit.user_id).id && Join.find_by(user_id: session[:user], talkroom_id: Talkroom.find_by(recruit_id: recruit.id)) == nil && recruit.status == false && joinpeople != recruit["applicant"]%>
-			   		<i class="fas fa-door-open fa-2x"></i>
-			   		<input type = "submit" value = "募集中！">
+			   		<form action = "/talkroom/<%= recruit.id %>" method = "post">
+			   			<i class="fas fa-door-open fa-2x"></i>
+			   			<input type = "submit" value = "募集中！">
+			   		</form>
 			   <%# すでにJoinしている時 %>
 			   <% elsif Join.find_by(user_id: session[:user], talkroom_id: Talkroom.find_by(recruit_id: recruit.id)) != nil && session[:user] != User.find_by(id: recruit.user_id).id%>
-			   		<input type = "submit" value = "トークに戻る">
+			   		<form action = "talkroom/<%= recruit.id %>" method = "get">
+			   			<input type = "submit" value = "トークに戻る">
+			   		</form>
 			   <% elsif joinpeople == recruit["applicant"] %>
 			   		<i class="fas fa-door-closed fa-2x"></i>
 			   		満員

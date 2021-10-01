@@ -166,10 +166,17 @@ img{
   bottom: 33px;
 }
 
-.posicolor6{
+.posicolor6{ /* 編集・削除ボタン*/
   color: #66BBFF;
   position: relative;
   left: 325px;
+}
+
+.posicolor7{ /* 評価記入戻るボタン*/
+  color: white;
+  position: relative;
+  up: 10px;
+  right: 10px;
 }
 
 .color-line{ /*　投稿リストの区切る縦線*/

@@ -419,10 +419,18 @@ post '/write/review/:id' do #評価する
             reviewer_id: session[:user],
             reviewed_id: params[:id]#reviewer.find_by(reviewed_id: params[:id])
             )
+        p "g"
+        
+        @reviewed = User.find(params[:id])
+        @reviews = Review.where(reviewed_id: params[:id])
+    
+        erb :reviewlist
+        
+    else 
+        @message = "同じユーザーのレビュー内容の重複はできません。"
+        @reviewed = User.find(params[:id])
+        p "$"
+        erb :writereview
     end
     
-    @reviewed = User.find(params[:id])
-    @reviews = Review.where(reviewed_id: params[:id])
-    
-    erb :reviewlist
 end

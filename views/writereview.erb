@@ -1,5 +1,13 @@
 <section style="text-align:center">
+    <%= @message %><br>
+    <div style="display:inline-flex">
+    <form action = "/review/<%= @reviewed.id %>" method = "get">
+        <h1><button type = "submit" value = "戻る">
+            <i class="fas fa-arrow-left fa-2x posicolor7"></i>
+        </button></h1>
+    </form>
     <h1><%= @reviewed.name %>さんの評価</h1>
+    </div>
     <form action = "/write/review/<%= @reviewed.id %>" method = "post">
         <div class="review">
         <div class="stars">
