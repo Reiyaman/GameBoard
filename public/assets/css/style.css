@@ -282,7 +282,7 @@ img{
 .star5_rating[data-rate="0.5"]:after{ width: 10%; } /* 星0.5 */
 .star5_rating[data-rate="0.0"]:after{ width: 0%; } /* 星0 */
 
-.balloon5 {
+.balloon5 { /* チャットのデザイン*/
   width: 100%;
   margin: 1.5em 0;
   overflow: hidden;
@@ -291,8 +291,10 @@ img{
 
 .balloon5 .faceicon {
   float: left;
-  margin-right: -90px;
+  margin-right: 100px;
   width: 80px;
+  position: relative;
+  left: 340px
 }
 
 .balloon5 .faceicon img{
@@ -303,7 +305,11 @@ img{
 }
 
 .balloon5 .chatting {
+  text-align: left;
   width: 100%;
+  position: relative;
+  left: 160px;
+  
 }
 
 .says {
