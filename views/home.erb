@@ -83,13 +83,13 @@
                     <% if posting.status == false %><%# 募集終了したら投稿を編集できないようにする%>
                         <form action = /edit/<%= posting.id%> method = "get">
                                 <button type = "submit" valur = "編集">
-                                    <i class="fas fa-pen color"></i>
+                                    <i class="fas fa-pen fa-2x posicolor6"></i>
                                 </button>
                         </form>
                     <% end %>
                     <form action = /delete/<%= posting.id%> method = "get">
                         <button type = "submit" valur = "削除">
-                            <i class="fas fa-trash color"></i>
+                            <i class="fas fa-trash fa-2x posicolor6"></i>
                         </button>
                     </form>
                     <form action = "/talkroom/<%= posting.id %>" method = "get">
