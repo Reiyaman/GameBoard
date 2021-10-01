@@ -119,6 +119,9 @@ img{
 #right-box{
   float: right;
   margin-right: -11px;
+  position: relative;
+  bottom: 235px;
+  right: 30px;
 }
 
 #footer{
