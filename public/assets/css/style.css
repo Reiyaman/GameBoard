@@ -456,3 +456,14 @@ img{
   left: 0;
   margin-top: -4px;
 }
+
+.emphasis{
+  color: #FFEF90;
+  font-size: 22px;
+}
+
+.topic{
+  color: #66BBFF;
+  text-decoration: underline;
+  font-size: 25px;
+}

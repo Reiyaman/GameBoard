@@ -434,3 +434,7 @@ post '/write/review/:id' do #評価する
     end
     
 end
+
+get '/how_to_use' do
+    erb :howtouse
+end

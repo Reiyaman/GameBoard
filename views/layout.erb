@@ -25,7 +25,8 @@
             <b>新規の方ですか？</b>
             <a href = "/sign_up">新規登録</a></br>
             <b>それともログインしますか？</b>
-            <a href = "/sign_in">ログイン</a>
+            <a href = "/sign_in">ログイン</a><br>
+            <a href = "/how_to_use"><i class="fas fa-question"></i>サイトについて</a>
         <% else %>
             <% if current_user.login == false %>
                 <b>ようこそ、<%= current_user.name %>さん</b>
@@ -44,7 +45,8 @@
                         <i class="fas fa-chalkboard-teacher fa-lg posicolor2"></i>
                         <i class="fas fa-plus posicolor5"></i>
                     </span> 投稿ページ</a><br>
-                <a href = '/sign_out'><i class="fas fa-sign-out-alt fa-lg"></i> ログアウト</a>
+                <a href = '/sign_out'><i class="fas fa-sign-out-alt fa-lg"></i> ログアウト</a><br>
+                <a href = "/how_to_use"><i class="fas fa-question"></i>サイトについて</a>
         <% end %>
     </ul>
     <%= yield %>
