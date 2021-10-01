@@ -120,8 +120,8 @@ img{
   float: right;
   margin-right: -11px;
   position: relative;
-  bottom: 235px;
-  right: 30px;
+  bottom: 250px;
+  right: 70px;
 }
 
 #footer{
@@ -166,12 +166,23 @@ img{
   bottom: 33px;
 }
 
-.color-line{
-  color: #FFEF90;
+.color-line{ /*　投稿リストの区切る縦線*/
+  color: #FFEF90; /* レビューリストの区切る縦線*/
 }
 
 .color-line2{
   color: #BB77FF;
+}
+
+.pagelist{
+  position: relative;
+  bottom: 33px;
+}
+
+.title{
+  font-size: 30px;
+  position: relative;
+  bottom: 10px;
 }
 .stars span{ /* レビューページの評価星*/
   display: flex;               /* 要素をフレックスボックスにする */

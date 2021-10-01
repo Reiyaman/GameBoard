@@ -19,8 +19,8 @@
 	></script>
 </head>
 <body>
-    <ul>
-        <b><a href = "/">GamePlusUにようこそ！！</a></b><br>
+    <ul class = "pagelist">
+        <b><a href = "/"><span class = "title">GamePlusUにようこそ！！</span></a></b><br>
         <% unless session[:user] %>
             <b>新規の方ですか？</b>
             <a href = "/sign_up">新規登録</a></br>
@@ -34,11 +34,12 @@
             <% end %>
             
             <% if current_user.profile.empty? %>
-                <a href = '/home'><img src = "/assets/img/game_software_cassette.png" alt = "user_image" width = "40" height = "40"></a>
+                <img src = "/assets/img/game_software_cassette.png" alt = "user_image" width = "40" height = "40"></a>
             <% else %>
-                <a href = '/home'><img src = "<%= current_user.profile %>" alt = "user_image" width = "40" height = "40"></a>
+                <img src = "<%= current_user.profile %>" alt = "user_image" width = "40" height = "40"></a>
             <% end %>
                 <a href = '/sign_out'>ログアウト</a><br>
+                <a href = '/home'>マイページ<a><br>
                 <a href = "/post/board">投稿ページ</a>
         <% end %>
     </ul>
