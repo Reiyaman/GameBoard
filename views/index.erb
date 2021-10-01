@@ -22,14 +22,18 @@
 		<% @recruits.reverse_each do |recruit| %>
 			<div class = "box22">
 			<p><% if User.find_by(id: recruit.user_id).profile.empty? %><%# プロフィール画像がなければ%>
-					<% if session[:user] != recruit.user_id  && session[:user] != nil %><%# 他のユーザーだけ押せる%>
+					<% if session[:user] != recruit.user_id  && session[:user] != nil %><%# 他のユーザー%>
 			   			<a href = "/otherpage/<%= recruit.user_id %>"><img src = "/assets/img/game_software_cassette.png" alt = "user_image" width = "40" height = "40"></a>
+			   		<% elsif session[:user] == recruit.user_id && session[:user] != nil %><%# 自分のアイコン%>
+			   			<a href = "/home"><img src = "/assets/img/game_software_cassette.png" alt = "user_image" width = "40" height = "40"></a>
 			   		<% else %>
 			   			<img src = "/assets/img/game_software_cassette.png" alt = "user_image" width = "40" height = "40">
 			   		<% end %>
                <% else %>
-               		<% if session[:user] != recruit.user_id  && session[:user] != nil %><%# 他のユーザーだけ押せる%>
+               		<% if session[:user] != recruit.user_id  && session[:user] != nil %><%# 他のユーザー%>
                 		<a href = "/otherpage/<%= recruit.user_id %>"><img src = "<%= User.find_by(id: recruit.user_id).profile %>" alt = "user_image" width = "40" height = "40"></a>
+                	<% elsif  session[:user] == recruit.user_id && session[:user] != nil %><%# 自分のアイコン%>
+                		<a href = "/home"><img src = "<%= User.find_by(id: recruit.user_id).profile %>" alt = "user_image" width = "40" height = "40"></a>
                 	<% else %>
                 		<img src = "<%= User.find_by(id: recruit.user_id).profile %>" alt = "user_image" width = "40" height = "40">
                 	<% end %>
