@@ -382,6 +382,7 @@ get '/otherpage/:id' do
     
     reviewstars = Review.where(reviewed_id: params[:id])
     star = 0
+    p @reviewcounts
     if @reviewcounts != 0
         reviewstars.each do |reviewstar| #全評価の星の数を数える
             star = star + reviewstar.star
@@ -391,6 +392,31 @@ get '/otherpage/:id' do
         @userstar = 0.0
     end
     
+    if 0.0 <= @userstar && @userstar < 0.5
+        @userstar = 0.0
+    elsif 0.5 <= @userstar && @userstar < 1.0
+        @userstar = 0.5
+    elsif 1.0 <= @userstar && @userstar < 1.5
+        @userstar = 1.0
+    elsif 1.5 <= @userstar && @userstar < 2.0
+        @userstar = 1.5
+    elsif 2.0 <= @userstar && @userstar < 2.5
+        @userstar = 2.0
+    elsif 2.5 <= @userstar && @userstar < 3.0
+        @userstar = 2.5
+    elsif 3.0 <= @userstar && @userstar < 3.5
+        @userstar = 3.0
+    elsif 3.5 <= @userstar && @userstar < 4.0
+        @userstar = 3.5
+    elsif 4.0 <= @userstar && @userstar < 4.5
+        @userstar = 4.0
+    elsif 4.5 <= @userstar && @userstar < 5.0
+        @userstar = 4.5
+    else
+        @userstar = 5.0
+    end
+    
+    p @userstar
     erb :home_other
 end
 
@@ -413,6 +439,7 @@ post '/write/review/:id' do #評価する
         if params[:star] == nil
             params[:star] = 0
         end
+        
         Review.create(
             evaluation: params[:evaluation],
             star: params[:star],
