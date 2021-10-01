@@ -15,12 +15,14 @@
             <div class = "box22">
             <form action = "/talkroom/<%= otherpost.id %>" method ="post">
                 <p><%= otherpost["articletime"].strftime("%Y-%m-%d %H:%M:%S") %></p>
-                <p><%= Model.find(otherpost.model_id).platform %> | 
-                <%= Game.find(otherpost.game_id).gamename %> |   
-                <%= Category.find(otherpost.category_id).purpose %> | 
+                <p><%= Model.find(otherpost.model_id).platform %> <span class = "color-line">|</span> 
+                <%= Game.find(otherpost.game_id).gamename %> <span class = "color-line">|</span>   
+                <%= Category.find(otherpost.category_id).purpose %> <span class = "color-line">|</span> 
                 <% joinpeople = Join.where(talkroom_id: Talkroom.find_by(recruit_id: otherpost.id)).where.not(user_id: @otheruser).count %>
-                定員 <%= joinpeople %>/<%= otherpost["applicant"] %> | 
-                <%= otherpost["article"] %> | 
+                定員 <%= joinpeople %>/<%= otherpost["applicant"] %>
+                <% if otherpost["article"] != "" %>
+                    <span class = "color-line">|</span> <%= otherpost["article"] %>
+                <% end %> <br>
                 <% if session[:user] != @otheruser.id && otherpost.status == false && joinpeople != otherpost["applicant"] && Join.find_by(user_id: session[:user], talkroom_id: Talkroom.find_by(recruit_id: otherpost.id)) == nil %>
                     <input type = "submit" value = "募集中!">
                 <% elsif Join.find_by(user_id: session[:user], talkroom_id: Talkroom.find_by(recruit_id: otherpost.id)) != nil && session[:user] != @otheruser.id %>

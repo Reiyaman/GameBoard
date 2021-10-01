@@ -48,7 +48,7 @@ border-radius: 8px 5px 2px 5px;
 .box23{
     padding: 0.1em 0.4em;
     margin: 1em 20em;
-    background: #FED6FF;
+    background: #FFCCE2;
     border-left: solid 6px #FF72A5;
     box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.33);
 }
@@ -166,7 +166,14 @@ img{
   bottom: 33px;
 }
 
-.stars span{
+.color-line{
+  color: #FFEF90;
+}
+
+.color-line2{
+  color: #BB77FF;
+}
+.stars span{ /* レビューページの評価星*/
   display: flex;               /* 要素をフレックスボックスにする */
   flex-direction: row-reverse; /* 星を逆順に並べる */
   justify-content: center;/* 逆順なので、左寄せにする */
@@ -186,7 +193,7 @@ img{
 .stars label:hover,
 .stars label:hover ~ label,
 .stars input[type='radio']:checked ~ label{
-  color: #F8C601;              /* 選択された星以降をすべて黄色にする */
+  color: #FFEF90;              /* 選択された星以降をすべて黄色にする */
 }
 
 .star5_rating{
@@ -209,7 +216,7 @@ img{
     left: 0;
     overflow: hidden;
     white-space: nowrap;
-    color: #ffcf32; /* イエローカラー 自由に設定化 */
+    color: #FFEF90; /* イエローカラー 自由に設定化 */
 }
 
 .star5_rating[data-rate="5.0"]:after{ width: 100%; } /* 星5 */
