@@ -434,11 +434,11 @@ get '/write/review/:id' do
 end
 
 post '/write/review/:id' do #評価する
+    if params[:star] == nil #空白は0
+            params[:star] = 0
+    end
     #reviewer.create(reviewed_id: params[:id]) #ユーザを評価する
     if Review.find_by(evaluation: params[:evaluation], star: params[:star], reviewer_id: session[:user], reviewed_id: params[:id]) == nil
-        if params[:star] == nil
-            params[:star] = 0
-        end
         
         Review.create(
             evaluation: params[:evaluation],
