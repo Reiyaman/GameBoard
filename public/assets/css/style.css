@@ -98,6 +98,7 @@ a {
 font-weight: bold;
 text-decoration: none;
 font-size: 20px;
+position: relative;
 }
 
 a:link { /*アクセスしたことのないリンク*/
@@ -306,10 +307,10 @@ img{
 
 .balloon5 .chatting {
   text-align: left;
-  width: 100%;
+  width: 80%;
   position: relative;
-  left: 160px;
-  
+  left:  400px;
+  padding-left: -100px;
 }
 
 .says {
@@ -319,6 +320,7 @@ img{
   padding: 17px 13px;
   border-radius: 12px;
   background: #A6E7FF;
+  right: 230px;
 }
 
 .says:after {
