@@ -66,6 +66,7 @@ body{
 section{
   font-family: 'Yusei Magic', sans-serif;;
   font-size: 1.0rem;
+  text-align: center;
 }
 
 input{
@@ -84,6 +85,10 @@ textarea{
 }
 
 button{
+  font-family: 'Yusei Magic', sans-serif;;
+  font-size: 1.2rem;
+  color: #66BBFF;
+  
   background: transparent;
   border: none;
   cursor: pointer;             /* カーソルが上に乗ったときに指の形にする */
@@ -92,6 +97,7 @@ button{
 a {
 font-weight: bold;
 text-decoration: none;
+font-size: 20px;
 }
 
 a:link { /*アクセスしたことのないリンク*/
@@ -118,10 +124,11 @@ img{
 
 #right-box{
   float: right;
-  margin-right: -11px;
+  margin-right: -110px;
   position: relative;
-  bottom: 210px;
-  right: 70px;
+  bottom: 240px;
+  right: 150px;
+  font-size: 20px;
 }
 
 #footer{
@@ -134,17 +141,20 @@ img{
   color: white;
 }
 
+
 .posicolor{
   color: white;
   position:relative;
   top:5px;
 }
 
-.posicolor2{
-  color: white;
+.posicolor2{ /* 投稿ページボタン*/
+  color: #FFEF90;
   position:relative;
-  top:8px;
+  button:14px;
+  right: 5px;
 }
+
 
 .posicolor3{ /* 評価するボタン*/
   color: white;
@@ -159,24 +169,41 @@ img{
   up: 15px;
 }
 
-.posicolor5{ /* 戻るするボタン*/
-  color: white;
+.posicolor5{ /* +ボタン*/
+  color: #FFEF90;
   position: relative;
-  left: 15px;
-  bottom: 33px;
+  left: -30px;
+  bottom: 8px;
+  font-size: 5px;
 }
 
 .posicolor6{ /* 編集・削除ボタン*/
   color: #66BBFF;
-  position: relative;
-  left: 325px;
 }
+
 
 .posicolor7{ /* 評価記入戻るボタン*/
   color: white;
   position: relative;
   up: 10px;
   right: 10px;
+}
+
+.posicolor8{ /* 終了・退出ボタン*/
+  color: #66BBFF;
+  position: relative;
+  bottom: 3px;
+  margin-left: 20px;
+}
+
+.buttoncolor{
+  color: #66BBFF;
+  position:relative;
+  top: 5px;
+}
+
+.fa-stack{
+    margin-right: -25px;
 }
 
 .color-line{ /*　投稿リストの区切る縦線*/
@@ -301,4 +328,125 @@ img{
 .says p {
   margin: 0;
   padding: 0;
+}
+
+
+.btn_05 {
+  width: 20%;
+  height: 35px;
+  background-color: #C3AFEE;
+  box-sizing: border-box;
+  color: #fff;
+  font-size: 16px;
+  letter-spacing: 0.15em;
+  line-height: 1.5;
+  text-decoration: none;
+  transition-duration: 0.3s;
+  position: relative;
+  bottom: 5px;
+}
+.btn_05:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 30px 40px 0 0;
+  border-color: #ffffff transparent transparent transparent;
+}
+.btn_05:after {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 5px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 0 40px 30px;
+  border-color: transparent transparent #efefef transparent;
+  box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.15);
+  transform: rotate(16deg);
+}
+.btn_05:hover {
+  background-color: #FAC2EA;
+}
+.btn_05 span {
+  position: relative;
+  padding-left: 16px;
+  letter-spacing: 0.05em;
+}
+.btn_05 span:before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border: 0;
+  border-top: solid 2px #fff;
+  border-right: solid 2px #fff;
+  transform: rotate(45deg);
+  position: absolute;
+  top: 50%;
+  left: 0;
+  margin-top: -4px;
+}
+
+.btn_06 {
+  width: 60%;
+  height: 35px;
+  background-color: #C3AFEE;
+  box-sizing: border-box;
+  color: #fff;
+  font-size: 16px;
+  letter-spacing: 0.15em;
+  line-height: 1.5;
+  text-decoration: none;
+  transition-duration: 0.3s;
+  position: relative;
+  bottom: 5px;
+}
+.btn_06:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 30px 40px 0 0;
+  border-color: #ffffff transparent transparent transparent;
+}
+.btn_06:after {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 5px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 0 40px 30px;
+  border-color: transparent transparent #efefef transparent;
+  box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.15);
+  transform: rotate(16deg);
+}
+.btn_06:hover {
+  background-color: #FAC2EA;
+}
+.btn_06 span {
+  position: relative;
+  padding-left: 16px;
+  letter-spacing: 0.05em;
+}
+.btn_06 span:before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border: 0;
+  border-top: solid 2px #fff;
+  border-right: solid 2px #fff;
+  transform: rotate(45deg);
+  position: absolute;
+  top: 50%;
+  left: 0;
+  margin-top: -4px;
 }

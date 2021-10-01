@@ -37,10 +37,14 @@
                 <img src = "/assets/img/game_software_cassette.png" alt = "user_image" width = "40" height = "40"></a>
             <% else %>
                 <img src = "<%= current_user.profile %>" alt = "user_image" width = "40" height = "40"></a>
-            <% end %>
-                <a href = '/sign_out'> ログアウト</a><br>
-                <a href = '/home'>マイページ<a><br>
-                <a href = "/post/board">投稿ページ</a>
+            <% end %><br>
+                <a href = '/home'><i class="fas fa-user fa-lg"></i>  マイページ<a><br>
+                <a href = "/post/board">
+                    <span class = "fa-stack">
+                        <i class="fas fa-chalkboard-teacher fa-lg posicolor2"></i>
+                        <i class="fas fa-plus posicolor5"></i>
+                    </span> 投稿ページ</a><br>
+                <a href = '/sign_out'><i class="fas fa-sign-out-alt fa-lg"></i> ログアウト</a>
         <% end %>
     </ul>
     <%= yield %>

@@ -365,7 +365,7 @@ post '/chat/:id' do #メッセージ送信
         comment: params[:comment],
         talkroom_id: params[:id],
         user_id: session[:user]
-        )
+    )
     
     @chats = Chat.where(talkroom_id: params[:id]) #このトークルームだけのチャットレコードを取り出す
     @joiner = Join.all
