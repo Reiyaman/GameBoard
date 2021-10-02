@@ -6,7 +6,7 @@ function dojQueryAjax() {
     $.ajax({
         type: "GET", // Getメソッドで通信
  
-        url: "/chatupdate/5", // 取得先のURL
+        url: "/chatupdate/chat", // 取得先のURL
  
         cache: false, // キャッシュしないで読み込み
  

@@ -13,7 +13,6 @@
     <% if !@otherposts.empty? %>
         <% @otherposts.reverse_each do |otherpost|%>
             <div class = "box22">
-            <form action = "/talkroom/<%= Talkroom.find_by(recruit_id: otherpost.id).id %>" method ="post">
                 <p><%= otherpost["articletime"].strftime("%Y-%m-%d %H:%M:%S") %></p>
                 <p><%= Model.find(otherpost.model_id).platform %> <span class = "color-line">|</span> 
                 <%= Game.find(otherpost.game_id).gamename %> <span class = "color-line">|</span>   
@@ -24,9 +23,13 @@
                     <span class = "color-line">|</span> <%= otherpost["article"] %>
                 <% end %> <br>
                 <% if session[:user] != @otheruser.id && otherpost.status == false && joinpeople != otherpost["applicant"] && Join.find_by(user_id: session[:user], talkroom_id: Talkroom.find_by(recruit_id: otherpost.id)) == nil %>
+                    <form action = "/talkroom/<%= otherpost.id %>" method ="post">
                     <input class = "btn_05" type = "submit" value = "募集中!">
+                    </form>
                 <% elsif Join.find_by(user_id: session[:user], talkroom_id: Talkroom.find_by(recruit_id: otherpost.id)) != nil && session[:user] != @otheruser.id %>
+                    <form action = "/talkroom/<%= Talkroom.find_by(recruit_id: otherpost.id).id %>" method ="get">
                     <input class = "btn_05" type = "submit" value = "トークに戻る">
+                    </form>
                 <% elsif joinpeople == otherpost["applicant"] %>
                     満員
                 <% elsif otherpost.status == true %>

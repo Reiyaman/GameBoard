@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="ja">
+<% if !@update.present? %>
 <div class = "kokuban">
+
 <head>
 	<meta charset="UTF-8">
 	<title>GamePlusU</title>
@@ -14,45 +16,50 @@
 	<meta name = "description" content = "一緒にオンラインゲームをしてくれる人を募集する掲示板サイト。ユーザー同士でトラブルが発生しないようにお互いがお互いをレビューすることで安心しながら利用できます。">
 	<%# jQuery%>
 	<script
-	   type = "text/javascript"
+       type = "text/javascript"
 	   src = "https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"
 	></script>
 </head>
+<% end %>
 <body>
-    <ul class = "pagelist">
-        <b><a href = "/"><span class = "title">GamePlusUにようこそ！！</span></a></b><br>
-        <% unless session[:user] %>
-            <b>新規の方ですか？</b>
-            <a href = "/sign_up">新規登録</a></br>
-            <b>それともログインしますか？</b>
-            <a href = "/sign_in">ログイン</a><br>
-            <a href = "/how_to_use"><i class="fas fa-question"></i>サイトについて</a>
-        <% else %>
-            <% if current_user.login == false %>
-                <b>ようこそ、<%= current_user.name %>さん</b>
-            <% else %>
-                <b>おかえりなさい、<%= current_user.name %>さん</b>
-            <% end %>
-            
-            <% if current_user.profile.empty? %>
-                <img src = "/assets/img/game_software_cassette.png" alt = "user_image" width = "40" height = "40"></a>
-            <% else %>
-                <img src = "<%= current_user.profile %>" alt = "user_image" width = "40" height = "40"></a>
-            <% end %><br>
-                <a href = '/home'><i class="fas fa-user fa-lg"></i>  マイページ<a><br>
-                <a href = "/post/board">
-                    <span class = "fa-stack">
-                        <i class="fas fa-chalkboard-teacher fa-lg posicolor2"></i>
-                        <i class="fas fa-plus posicolor5"></i>
-                    </span> 投稿ページ</a><br>
-                <a href = '/sign_out'><i class="fas fa-sign-out-alt fa-lg"></i> ログアウト</a><br>
+    <% if !@update.present? %>
+        <ul class = "pagelist">
+            <b><a href = "/"><span class = "title">GamePlusUにようこそ！！</span></a></b><br>
+            <% unless session[:user] %>
+                <b>新規の方ですか？</b>
+                <a href = "/sign_up">新規登録</a></br>
+                <b>それともログインしますか？</b>
+                <a href = "/sign_in">ログイン</a><br>
                 <a href = "/how_to_use"><i class="fas fa-question"></i>サイトについて</a>
-        <% end %>
-    </ul>
+            <% else %>
+                <% if current_user.login == false %>
+                    <b>ようこそ、<%= current_user.name %>さん</b>
+                <% else %>
+                    <b>おかえりなさい、<%= current_user.name %>さん</b>
+                <% end %>
+            
+                <% if current_user.profile.empty? %>
+                    <img src = "/assets/img/game_software_cassette.png" alt = "user_image" width = "40" height = "40"></a>
+                <% else %>
+                    <img src = "<%= current_user.profile %>" alt = "user_image" width = "40" height = "40"></a>
+                <% end %><br>
+                    <a href = '/home'><i class="fas fa-user fa-lg"></i>  マイページ<a><br>
+                    <a href = "/post/board">
+                        <span class = "fa-stack">
+                            <i class="fas fa-chalkboard-teacher fa-lg posicolor2"></i>
+                            <i class="fas fa-plus posicolor5"></i>
+                        </span> 投稿ページ</a><br>
+                    <a href = '/sign_out'><i class="fas fa-sign-out-alt fa-lg"></i> ログアウト</a><br>
+                    <a href = "/how_to_use"><i class="fas fa-question"></i>サイトについて</a>
+                <% end %>
+        </ul>
+    <% end %>
     <%= yield %>
 </body>
-<div id = "footer">
-    ©Copyright 2021 GamePlusU all rights reserved.
-</div>
-</div>
+    <% if !@update.present? %>
+        <div id = "footer">
+            ©Copyright 2021 GamePlusU all rights reserved.
+        </div>
+    </div>
+    <% end %>
 </html>

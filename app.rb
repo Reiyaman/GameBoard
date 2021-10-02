@@ -338,7 +338,7 @@ post '/exit/:id' do #トークルーム退出
     if session[:user] == User.find(@joinrecruit.user_id).id
         Join.destroy_by(talkroom_id: Talkroom.find_by(recruit_id: params[:id]))
         #destroyjoin.destroy #joinレコード消す
-        destroyroom = Talkroom.find_by(recruit_id: params[:id])
+        destroyroom = Talkroom.find(params[:id])
         destroyroom.destroy #talkroomレコード消す
         #@joinrecruit.destroy #投稿消す
         @joinrecruit.status = true
@@ -384,7 +384,7 @@ get '/chatupdate/:id' do #非同期ようのPost
     @joiner = Join.all
     @joinrecruit = Recruit.find(Talkroom.find(params[:id]).recruit_id)
     @talkrooms = Talkroom.find(params[:id])
-    
+    @update = true
     erb :talkroom
 end
     
