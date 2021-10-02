@@ -1,5 +1,5 @@
 <section style="text-align:center">
-    <form action = "/exit/<%= @joinrecruit.id %>" method = "post">
+    <form action = "/exit/<%= @talkrooms.id %>" method = "post">
         <h1><%= User.find_by(id: @joinrecruit.user_id).name %>さんと
         <%= Game.find_by(id: @joinrecruit.game_id).gamename%>で遊ぶためのトークルーム  
         <% if session[:user] == User.find(@joinrecruit.user_id).id %>
@@ -23,6 +23,7 @@
         <% end %>
     <% end %></b><br>
     <h2>チャット</h2><br>
+    <div id = "ajaxreload">
     <% if !@chats.empty? %>
         <% @chats.each do |chat| %>
             <!--吹き出しはじまり-->
@@ -53,11 +54,20 @@
             <!--吹き出し終わり-->
         <% end %>
     <% end %>
+    </div>
+    
+    <p hidden class = "sendtalkroom"><%= @id %></p><%# 渡すためのトークルームid%>
+    
+    <div id = "footer">
     <form action = "/chat/<%= @talkrooms.id %>" method = "post">
         <input type = "text" name = "comment" placeholder = "メッセージを入力" required>
         <button type = "submit" value = "送信">
             <i class="fas fa-paper-plane fa-2x buttoncolor"></i>
         </button>
     </form>
-
+    </div>
+    
+    <%#script
+        src = "/js/message.js"
+    ></script%>
 </section>

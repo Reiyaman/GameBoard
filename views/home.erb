@@ -46,7 +46,7 @@
                         <% end %>
                         <%= User.find_by(id: recruit.user_id).name %>
                         <%= recruit["articletime"].strftime("%Y-%m-%d %H:%M:%S") %></p>
-                    <p><form action = "/talkroom/<%= recruit.id %>" method = "get">
+                    <p><form action = "/talkroom/<%= Talkroom.find_by(recruit_id: recruit.id).id %>" method = "get">
                         <%= Model.find_by(id: recruit.model_id).platform %> <span class = "color-line">|</span>
                         <%= Game.find_by(id: recruit.game_id).gamename %> <span class = "color-line">|</span>
 			            <%= Category.find_by(id: recruit.category_id).purpose %>
@@ -80,20 +80,20 @@
                     <span class = "color-line">|</span> <%= posting["article"] %>
                 <% end %><br>
                 <div style="display:inline-flex">
-                    <form action = "/talkroom/<%= posting.id %>" method = "get">
                         <% if posting.status == false %>
                             募集中！
                             <% if !@talkrooms.empty? %>
                                 <% @talkrooms.reverse_each do |talkroom| %><%# 他のユーザーがトークルームに入ると表示かつ、誰もいない時は非表示%>
                                     <% if posting == Recruit.find_by(id: talkroom.recruit_id) %>
+                                        <form action = "/talkroom/<%= Talkroom.find_by(recruit_id: posting.id).id %>" method = "get">
                                         <input class = "btn_06" type = "submit" value = "誰かきたよ!">
+                                        </form>
                                     <% end %>
                                 <% end %>
                             <% end %>
                         <% elsif posting.status == true %>
                             募集終了
                         <% end %>
-                    </form>
                     <% if posting.status == false %><%# 募集終了したら投稿を編集できないようにする%>
                         <form action = /edit/<%= posting.id%> method = "get">
                             <button type = "submit" valur = "編集">

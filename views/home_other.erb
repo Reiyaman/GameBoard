@@ -13,7 +13,7 @@
     <% if !@otherposts.empty? %>
         <% @otherposts.reverse_each do |otherpost|%>
             <div class = "box22">
-            <form action = "/talkroom/<%= otherpost.id %>" method ="post">
+            <form action = "/talkroom/<%= Talkroom.find_by(recruit_id: otherpost.id).id %>" method ="post">
                 <p><%= otherpost["articletime"].strftime("%Y-%m-%d %H:%M:%S") %></p>
                 <p><%= Model.find(otherpost.model_id).platform %> <span class = "color-line">|</span> 
                 <%= Game.find(otherpost.game_id).gamename %> <span class = "color-line">|</span>   

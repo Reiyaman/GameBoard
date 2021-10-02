@@ -277,10 +277,12 @@ get '/delete/:id' do
 end
 
 get '/talkroom/:id' do #トークルームに飛ぶ
-    @joinrecruit = Recruit.find(params[:id])
+    @joinrecruit = Recruit.find(Talkroom.find(params[:id]).recruit_id)
     @joiner = Join.all
-    @talkrooms = Talkroom.find_by(recruit_id: params[:id])
-    @chats = Chat.where(talkroom_id: Talkroom.find_by(recruit_id: params[:id]).id) #そのトークルームのチャットレコードを取り出す
+    @talkrooms = Talkroom.find(params[:id])
+    @chats = Chat.where(talkroom_id: params[:id]) #そのトークルームのチャットレコードを取り出す
+    @id = params[:id] #トークルームid
+    
     erb :talkroom
 end
     
@@ -316,7 +318,8 @@ post '/talkroom/:id' do #トークルーム作成
     @joiner = Join.all
     @talkrooms = Talkroom.find_by(recruit_id: params[:id])
     @chats = Chat.where(talkroom_id: Talkroom.find_by(recruit_id: params[:id])) #そのトークルームのチャットレコードを取り出す
-   
+    @id = Talkroom.find_by(recruit_id: params[:id]).id
+    
     erb :talkroom
 end
 
@@ -330,7 +333,7 @@ post '/search' do #ゲームタイトルで絞り検索
 end
 
 post '/exit/:id' do #トークルーム退出
-    @joinrecruit = Recruit.find(params[:id])
+    @joinrecruit = Recruit.find(Talkroom.find(params[:id]).recruit_id)
     #終了ボタン押したら
     if session[:user] == User.find(@joinrecruit.user_id).id
         Join.destroy_by(talkroom_id: Talkroom.find_by(recruit_id: params[:id]))
@@ -343,7 +346,7 @@ post '/exit/:id' do #トークルーム退出
         p "o"
     #退出するボタン押したら
     else
-        exitroom = Join.find_by(talkroom_id: Talkroom.find_by(recruit_id: params[:id]), user_id: session[:user])
+        exitroom = Join.find_by(talkroom_id: params[:id], user_id: session[:user])
         exitroom.destroy
         p "d"
     
@@ -371,10 +374,20 @@ post '/chat/:id' do #メッセージ送信
     @joiner = Join.all
     @joinrecruit = Recruit.find(Talkroom.find(params[:id]).recruit_id)
     @talkrooms = Talkroom.find(params[:id])
+    @id = params[:id]
     
     erb :talkroom
 end
 
+get '/chatupdate/:id' do #非同期ようのPost
+    @chats = Chat.where(talkroom_id: params[:id]) #このトークルームだけのチャットレコードを取り出す
+    @joiner = Join.all
+    @joinrecruit = Recruit.find(Talkroom.find(params[:id]).recruit_id)
+    @talkrooms = Talkroom.find(params[:id])
+    
+    erb :talkroom
+end
+    
 get '/otherpage/:id' do
     @otheruser = User.find(params[:id]) #飛んだユーザー情報
     @otherposts = Recruit.where(user_id: params[:id]) #飛んだユーザーの投稿情報

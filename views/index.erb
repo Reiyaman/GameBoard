@@ -56,7 +56,7 @@
 			   		</form>
 			   <%# すでにJoinしている時 %>
 			   <% elsif Join.find_by(user_id: session[:user], talkroom_id: Talkroom.find_by(recruit_id: recruit.id)) != nil && session[:user] != User.find_by(id: recruit.user_id).id%>
-			   		<form action = "talkroom/<%= recruit.id %>" method = "get">
+			   		<form action = "talkroom/<%= Talkroom.find_by(recruit_id: recruit.id).id %>" method = "get">
 			   			<input class = "btn_05" type = "submit" value = "トークに戻る">
 			   		</form>
 			   <% elsif joinpeople == recruit["applicant"] %>
