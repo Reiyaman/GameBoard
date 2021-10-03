@@ -1,4 +1,4 @@
-function dojQueryAjax() {
+function dojQueryAjax() { //リロードしなくてもチャット更新される
     $(function(){
     var chat = '/chatupdate/' + $('.sendtalkroom').text();
     console.log(chat);
@@ -28,20 +28,24 @@ function dojQueryAjax() {
  
 }
  
-window.addEventListener('load', function () {
+window.addEventListener('load', function () { //1秒おきに呼び出される
  
     setTimeout(dojQueryAjax, 1000);
  
 });
 
-/*$('.fa-paper-plane').on('click', function() {
+$('.fa-paper-plane').off('click');
+$('.fa-paper-plane').on('click', function() {
     $(function(){
-    var id = $('.sendtalkroom').text();
     var send = '/chat/' + $('.sendtalkroom').text();
     console.log(send);
     
     if (send != '/chat/'){
-        var comment = $('.fa-paper-plane').text();
+        var comment = $('.sendchat').val();
+        var id = $('.sendtalkroom').text();
+        
+        console.log(comment);
+        console.log(id);
         // jQueryのajaxメソッドを使用しajax通信
         $.ajax({
             
@@ -71,7 +75,8 @@ window.addEventListener('load', function () {
  
  
             }
-            });
+        });
+        
     }
     });
-});*/
+});
