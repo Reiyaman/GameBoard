@@ -364,6 +364,7 @@ post '/exit/:id' do #トークルーム退出
 end
 
 post '/chat/:id' do #メッセージ送信
+    
     Chat.create(
         comment: params[:comment],
         talkroom_id: params[:id],
@@ -375,7 +376,7 @@ post '/chat/:id' do #メッセージ送信
     @joinrecruit = Recruit.find(Talkroom.find(params[:id]).recruit_id)
     @talkrooms = Talkroom.find(params[:id])
     @id = params[:id]
-    
+    #@update = true
     erb :talkroom
 end
 
