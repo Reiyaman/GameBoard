@@ -1,0 +1,51 @@
+<div class="ajaxReturn">
+    <% if !@posts.empty? %>
+        <% @posts.reverse_each do |posting| %>
+            <div class = "box22">
+                <% if @update != true %><%# 初回だけ表示 %>
+                <p hidden class = "postnumber"><%= posting.id %></p><%# 渡すためのトークルームid%>
+                <% end %>
+                <%= posting["articletime"].strftime("%Y-%m-%d %H:%M:%S") %><br>
+                <%= Model.find_by(id: posting.model_id).platform %> <span class = "color-line">|</span> 
+                <%= Game.find_by(id: posting.game_id).gamename %> <span class = "color-line">|</span>
+                <%= Category.find_by(id: posting.category_id).purpose %> <span class = "color-line">|</span> 
+                <% joinpeople = Join.where(talkroom_id: Talkroom.find_by(recruit_id: posting.id)).where.not(user_id: posting.user_id).count %>
+                定員 <%= joinpeople %>/<%= posting["applicant"] %>
+                <% if posting["article"] != "" %>
+                    <span class = "color-line">|</span> <%= posting["article"] %>
+                <% end %><br>
+                <div style="display:inline-flex">
+                    <% if posting.status == false %>
+                        募集中！
+                        <% if !@talkrooms.empty? %>
+                            <% @talkrooms.reverse_each do |talkroom| %><%# 他のユーザーがトークルームに入ると表示かつ、誰もいない時は非表示%>
+                                <% if posting == Recruit.find_by(id: talkroom.recruit_id) %>
+                                    <form action = "/talkroom/<%= Talkroom.find_by(recruit_id: posting.id).id %>" method = "get">
+                                    <input class = "btn_06" type = "submit" value = "誰かきたよ!">
+                                    </form>
+                                <% end %>
+                            <% end %>
+                        <% end %>
+                    <% elsif posting.status == true %>
+                        募集終了
+                    <% end %>
+                    <% if posting.status == false %><%# 募集終了したら投稿を編集できないようにする%>
+                        <form action = "/edit/<%= posting.id%>" method = "get">
+                            <button type = "submit" valur = "編集">
+                                <i class="fas fa-pen fa-lg posicolor6"></i>
+                            </button>
+                        </form>
+                    <% end %>
+                    <form action = "/delete/<%= posting.id%>" method = "get">
+                        <%#button type = "submit" value = "削除" %>
+                            <i class="fas fa-trash fa-2x posicolor6"></i>
+                                    <span hidden class = "postnumber"><%= posting.id %></span><%# 渡すためのトークルームid%>
+                        <%# /button %>
+                    </form>
+                </div>
+            </div>
+        <% end %>
+    <% else %>
+    <b>投稿がありません</b>
+    <% end %>
+</div>

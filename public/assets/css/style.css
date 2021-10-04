@@ -473,3 +473,13 @@ img{
 .fa-paper-plane{ /* チャット送信ボタン*/
   cursor: pointer;   
 }
+
+.fa-trash{ /* チャット送信ボタン*/
+  font-family: 'Yusei Magic', sans-serif;;
+  font-size: 1.2rem;
+  color: #66BBFF;
+  
+  background: transparent;
+  border: none;
+  cursor: pointer;  
+}

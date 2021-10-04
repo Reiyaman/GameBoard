@@ -1,4 +1,5 @@
 <section style="text-align:center">
+    
     <%= @message %>
     <h2><form action = "/edit/profile" method = "get">
         <b><% if current_user.profile.empty? %>
@@ -65,21 +66,24 @@
     <% else %>
         <b>ありません。誰かの投稿を見てJoinしてみよう！</b>
     <% end %>
-    
+
     <h1><%= current_user.name %>さんの投稿</h1>
-    <% if !@posts.empty? %>
-        <% @posts.reverse_each do |posting| %>
-            <div class = "box22">
-                <%= posting["articletime"].strftime("%Y-%m-%d %H:%M:%S") %><br>
-                <%= Model.find_by(id: posting.model_id).platform %> <span class = "color-line">|</span> 
-                <%= Game.find_by(id: posting.game_id).gamename %> <span class = "color-line">|</span>
-                <%= Category.find_by(id: posting.category_id).purpose %> <span class = "color-line">|</span> 
-                <% joinpeople = Join.where(talkroom_id: Talkroom.find_by(recruit_id: posting.id)).where.not(user_id: posting.user_id).count %>
-                定員 <%= joinpeople %>/<%= posting["applicant"] %>
-                <% if posting["article"] != "" %>
-                    <span class = "color-line">|</span> <%= posting["article"] %>
-                <% end %><br>
-                <div style="display:inline-flex">
+
+    <div id = "postreload">
+        
+        <% if !@posts.empty? %>
+            <% @posts.reverse_each do |posting| %>
+                <div class = "box22">
+                    <%= posting["articletime"].strftime("%Y-%m-%d %H:%M:%S") %><br>
+                    <%= Model.find_by(id: posting.model_id).platform %> <span class = "color-line">|</span> 
+                    <%= Game.find_by(id: posting.game_id).gamename %> <span class = "color-line">|</span>
+                    <%= Category.find_by(id: posting.category_id).purpose %> <span class = "color-line">|</span> 
+                    <% joinpeople = Join.where(talkroom_id: Talkroom.find_by(recruit_id: posting.id)).where.not(user_id: posting.user_id).count %>
+                    定員 <%= joinpeople %>/<%= posting["applicant"] %>
+                    <% if posting["article"] != "" %>
+                        <span class = "color-line">|</span> <%= posting["article"] %>
+                    <% end %><br>
+                    <div style="display:inline-flex">
                         <% if posting.status == false %>
                             募集中！
                             <% if !@talkrooms.empty? %>
@@ -94,22 +98,31 @@
                         <% elsif posting.status == true %>
                             募集終了
                         <% end %>
-                    <% if posting.status == false %><%# 募集終了したら投稿を編集できないようにする%>
-                        <form action = /edit/<%= posting.id%> method = "get">
-                            <button type = "submit" valur = "編集">
-                                <i class="fas fa-pen fa-lg posicolor6"></i>
-                            </button>
+                        <% if posting.status == false %><%# 募集終了したら投稿を編集できないようにする%>
+                            <form action = "/edit/<%= posting.id%>" method = "get">
+                                <button type = "submit" valur = "編集">
+                                    <i class="fas fa-pen fa-lg posicolor6"></i>
+                                </button>
+                            </form>
+                        <% end %>
+                        <form action = "delete/<%= posting.id%>" method = "post">
+                            <%#button type = "submit" value = "削除" %>
+                                <i class="fas fa-trash fa-2x posicolor6 "></i>
+                                    <span hidden class = "postnumber"><%= posting.id %></span><%# 渡すためのトークルームid%>
+                            <%#/button %>
                         </form>
-                    <% end %>
-                    <form action = /delete/<%= posting.id%> method = "get">
-                        <button type = "submit" valur = "削除">
-                            <i class="fas fa-trash fa-lg posicolor6"></i>
-                        </button>
-                    </form>
+                    </div>
                 </div>
-            </div>
         <% end %>
-    <% else %>
-    <b>投稿がありません</b>
-    <% end %>
+        <% else %>
+        <b>投稿がありません</b>
+        <% end %>
+        
+       
+        
+    </div>
+    
+    <script
+        src = "/js/deletepost.js"
+    ></script>
 </section>

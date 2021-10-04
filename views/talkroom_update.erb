@@ -1,0 +1,32 @@
+<div class="ajaxReturn">
+    <% if !@chats.empty? %>
+        <% @chats.each do |chat| %>
+            <!--吹き出しはじまり-->
+            <div class="balloon5">
+                <div class="faceicon">
+                    <% if session[:user] != chat.user_id %><%# 他のユーザーアイコン%>
+                        <% if User.find_by(id: chat.user_id).profile.empty? %>
+                            <a href = "/otherpage/<%= chat.user_id %>"><img src = "/assets/img/game_software_cassette.png" alt = "user_image" width = "40" height = "40"></a>
+                        <% else %>
+                            <a href = "/otherpage/<%= chat.user_id %>"><img src = "<%= User.find_by(id: chat.user_id).profile %>" alt = "user_image" width = "40" height = "40"></a>
+                        <% end %>
+                    <% else %><%# 自分のアイコン%>
+                        <% if User.find_by(id: chat.user_id).profile.empty? %>
+                            <a href = "/home"><img src = "/assets/img/game_software_cassette.png" alt = "user_image" width = "40" height = "40"></a>
+                        <% else %>
+                            <a href = "/home"><img src = "<%= User.find_by(id: chat.user_id).profile %>" alt = "user_image" width = "40" height = "40"></a>
+                        <% end %>
+                    <% end %><br>
+                
+                    <%= User.find_by(id: chat.user_id).name %>
+                </div>
+                <div class="chatting">
+                    <div class="says">
+                        <p style="width:30em;">><%= chat["comment"] %></p><%# 30文字ごとに改行%>
+                    </div>
+                </div>
+            </div>
+            <!--吹き出し終わり-->
+        <% end %>
+    <% end %>
+</div>

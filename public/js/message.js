@@ -1,5 +1,4 @@
-function dojQueryAjax() { //リロードしなくてもチャット更新される
-    $(function(){
+function dojQueryAjax() {
     var chat = '/chatupdate/' + $('.sendtalkroom').text();
     console.log(chat);
     // jQueryのajaxメソッドを使用しajax通信
@@ -7,13 +6,13 @@ function dojQueryAjax() { //リロードしなくてもチャット更新され�
         type: "GET", // Getメソッドで通信
  
         url: chat, // 取得先のURL
- 
+        
         cache: false, // キャッシュしないで読み込み
  
         // 通信成功時に呼び出されるコールバック
         success: function (data) {
  
-            $('#ajaxreload').html(data);
+            $('#chatreload').html(data);
  
         },
         // 通信エラー時に呼び出されるコールバック
@@ -24,8 +23,6 @@ function dojQueryAjax() { //リロードしなくてもチャット更新され�
  
         }
     });
-    });
- 
 }
  
 window.addEventListener('load', function () { //1秒おきに呼び出される
@@ -33,6 +30,7 @@ window.addEventListener('load', function () { //1秒おきに呼び出される
     setTimeout(dojQueryAjax, 1000);
  
 });
+
 
 $('.fa-paper-plane').off('click');
 $('.fa-paper-plane').on('click', function() {
@@ -65,7 +63,7 @@ $('.fa-paper-plane').on('click', function() {
             // 通信成功時に呼び出されるコールバック
             success: function (data) {
 
-                $('#ajaxreload').html(data);
+                $('#chatreload').html(data);
  
             },
             // 通信エラー時に呼び出されるコールバック

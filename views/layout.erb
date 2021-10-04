@@ -2,7 +2,6 @@
 <html lang="ja">
 <% if !@update.present? %>
 <div class = "kokuban">
-
 <head>
 	<meta charset="UTF-8">
 	<title>GamePlusU</title>
@@ -21,9 +20,7 @@
 	   src = "https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"
 	></script>
 </head>
-<% end %>
 <body>
-    <% if !@update.present? %>
         <ul class = "pagelist">
             <b><a href = "/"><span class = "title">GamePlusUにようこそ！！</span></a></b><br>
             <% unless session[:user] %>
@@ -54,13 +51,14 @@
                     <a href = "/how_to_use"><i class="fas fa-question"></i>サイトについて</a>
                 <% end %>
         </ul>
-    <% end %>
+<% end %>
     <%= yield %>
 </body>
-    <% if !@update.present? %>
+<% if !@update.present? %>
         <div id = "footer">
             ©Copyright 2021 GamePlusU all rights reserved.
         </div>
-    </div>
-    <% end %>
+</div>
+<% end %>
+
 </html>

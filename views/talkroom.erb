@@ -1,5 +1,5 @@
 <section style="text-align:center">
-<% if !@update.present? %>
+
     <form action = "/exit/<%= @talkrooms.id %>" method = "post">
         <h1><%= User.find_by(id: @joinrecruit.user_id).name %>さんと
         <%= Game.find_by(id: @joinrecruit.game_id).gamename%>で遊ぶためのトークルーム  
@@ -24,8 +24,8 @@
         <% end %>
     <% end %></b><br>
     <h2>チャット</h2><br>
-<% end %>
-    <div id = "ajaxreload">
+    
+    <div id = "chatreload">
         <% if !@chats.empty? %>
             <% @chats.each do |chat| %>
                 <!--吹き出しはじまり-->
@@ -57,12 +57,10 @@
             <% end %>
         <% end %>
      </div>
-    
-    <% if @update != true %><%# 初回だけ表示 %>
+    <% if !@update.present? %><%# 初回だけ表示 %>
     <p hidden class = "sendtalkroom"><%= @id %></p><%# 渡すためのトークルームid%>
     <% end %>
-    
-    <% if !@update.present? %>
+
     <div id = "footer">
     <form id = "form_id" action = "/chat/<%= @talkrooms.id %>" method = "post">
         <input class = "sendchat" type = "text" name = "comment" placeholder = "メッセージを入力" required>
@@ -71,7 +69,6 @@
             <%#/button%>
     </form>
     </div>
-    <% end %>
     <script
         src = "/js/message.js"
     ></script>

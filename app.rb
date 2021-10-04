@@ -261,7 +261,7 @@ post '/edit/:id' do #編集する
     redirect '/home'
 end
 
-get '/delete/:id' do
+post '/delete/:id' do
     
     #すでにトークルームがあったら
     if !Join.where(talkroom_id: Talkroom.find_by(recruit_id: params[:id])).empty?
@@ -273,7 +273,28 @@ get '/delete/:id' do
     
     recruit = Recruit.find(params[:id])
     recruit.destroy
-    redirect '/home'
+    
+    @posts = Recruit.where(user_id: session[:user]) #ログインしているユーザーの投稿情報だけ取り出す
+    
+    @joinscount = Join.where(user_id: session[:user]).count
+    @userjoins = Join.where(user_id: session[:user])#.where.not(talkroom_id: Talkroom.find_by(id: Recruit.find_by(user_id: session[:user]))) #ログインしているユーザーのJoin情報だけを取り出す
+    @talkrooms = Talkroom.all
+    @joiner = Join.all
+    @reviewcounts = Review.where(reviewed_id: session[:user]).count #そのユーザーを評価した数
+    
+    reviewstars = Review.where(reviewed_id: session[:user])
+    star = 0
+    if @reviewcounts != 0
+        reviewstars.each do |reviewstar| #全評価の星の数を数える
+            star = star + reviewstar.star
+        end
+        @userstar = star / @reviewcounts #全評価の平均を出す
+    else 
+        @userstar = 0.0
+    
+    end
+    @update = true
+    erb :home_update
 end
 
 get '/talkroom/:id' do #トークルームに飛ぶ
@@ -377,16 +398,16 @@ post '/chat/:id' do #メッセージ送信
     @talkrooms = Talkroom.find(params[:id])
     @id = params[:id]
     @update = true
-    erb :talkroom
+    erb :talkroom_update
 end
 
-get '/chatupdate/:id' do #非同期ようのPost
+get '/chatupdate/:id' do #非同期ようのget
     @chats = Chat.where(talkroom_id: params[:id]) #このトークルームだけのチャットレコードを取り出す
     @joiner = Join.all
     @joinrecruit = Recruit.find(Talkroom.find(params[:id]).recruit_id)
     @talkrooms = Talkroom.find(params[:id])
     @update = true
-    erb :talkroom
+    erb :talkroom_update
 end
     
 get '/otherpage/:id' do
